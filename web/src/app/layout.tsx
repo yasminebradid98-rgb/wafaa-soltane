@@ -1,10 +1,11 @@
-import type { Metadata } from 'next'
+import { Outfit } from 'next/font/google'
 import './globals.css'
-import './globals.css'; // Ajustez le chemin vers votre fichier CSS
-export const metadata: Metadata = {
-  title: 'Wafaa Soltane - Photography',
-  description: 'Wafaa Soltane – Photographer and visual artist capturing moments and stories.',
-}
+
+const outfit = Outfit({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600'],
+  variable: '--font-outfit',
+})
 
 export default function RootLayout({
   children,
@@ -12,16 +13,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Signika:wght@400;700&display=swap"
-          rel="stylesheet"
-        />
-      </head>
-      <body className="dark:bg-black bg-white min-h-screen text-black dark:text-white">
+    <html lang="fr" className={outfit.variable}>
+      <body className="font-sans antialiased bg-[#e2e1dd] text-black">
         {children}
       </body>
     </html>
