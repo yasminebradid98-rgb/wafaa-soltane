@@ -1,4 +1,7 @@
+import Link from 'next/link'
 import { createClient } from 'next-sanity'
+
+export const dynamic = 'force-dynamic'
 
 const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || '4z3hno31',
@@ -15,46 +18,49 @@ export default async function Home() {
   return (
     <div className="dark:bg-black bg-white min-h-screen text-black dark:text-white px-5 md:px-20">
       {/* Header / Navigation */}
-      <header className="flex w-full overflow-hidden pt-10 pb-1">
-        <nav id="nav" role="navigation" className="w-full">
-          <div className="container mx-auto flex flex-wrap items-center md:flex-no-wrap">
-            <div className="mr-4 md:mr-8">
-              <a href="/" className="text-2xl font-signika font-bold tracking-wide">
-                WAFAA SOLTANE
-              </a>
-            </div>
+import Link from 'next/link'
 
-            <div id="menu" className="w-full transition-all ease-out duration-500 md:w-auto md:flex-grow md:flex md:items-center">
-              <ul id="ulMenu" className="flex flex-col duration-300 ease-out md:space-x-5 mt-5 md:flex-row md:items-center md:ml-auto md:mt-0 md:pt-0 md:border-0">
-                <li className="group transition duration-300">
-                  <a href="/" className="font-signika text-2xl tap-highlight-transparent">
-                    PHOTOGRAPHY
-                    <span className="hidden md:block h-0.5 bg-black dark:bg-white"></span>
-                  </a>
-                </li>
-                <li className="group transition duration-300">
-                  <a href="/videos.html" className="font-signika text-2xl tap-highlight-transparent">
-                    VIDEOGRAPHY
-                    <span className="hidden md:block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black dark:bg-white"></span>
-                  </a>
-                </li>
-                <li className="group transition duration-300">
-                  <a href="/dist/about_me.html" className="font-signika text-2xl tap-highlight-transparent">
-                    ABOUT ME
-                    <span className="hidden md:block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black dark:bg-white"></span>
-                  </a>
-                </li>
-                <li className="group transition duration-300">
-                  <a href="/dist/contact.html" className="font-signika text-2xl tap-highlight-transparent">
-                    CONTACT
-                    <span className="hidden md:block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black dark:bg-white"></span>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </nav>
-      </header>
+// Inside your component layout:
+<header className="flex w-full overflow-hidden pt-10 pb-1">
+  <nav id="nav" role="navigation" className="w-full">
+    <div className="container mx-auto flex flex-wrap items-center md:flex-no-wrap">
+      <div className="mr-4 md:mr-8">
+        <Link href="/" className="text-2xl font-signika font-bold tracking-wide">
+          WAFAA SOLTANE
+        </Link>
+      </div>
+
+      <div id="menu" className="w-full transition-all ease-out duration-500 md:w-auto md:flex-grow md:flex md:items-center">
+        <ul id="ulMenu" className="flex flex-col duration-300 ease-out md:space-x-5 mt-5 md:flex-row md:items-center md:ml-auto md:mt-0 md:pt-0 md:border-0">
+          <li className="group transition duration-300">
+            <Link href="/" className="font-signika text-2xl tap-highlight-transparent">
+              PHOTOGRAPHY
+              <span className="hidden md:block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black dark:bg-white"></span>
+            </Link>
+          </li>
+          <li className="group transition duration-300">
+            <Link href="/videos" className="font-signika text-2xl tap-highlight-transparent">
+              VIDEOGRAPHY
+              <span className="hidden md:block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black dark:bg-white"></span>
+            </Link>
+          </li>
+          <li className="group transition duration-300">
+            <Link href="/about" className="font-signika text-2xl tap-highlight-transparent">
+              ABOUT ME
+              <span className="hidden md:block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black dark:bg-white"></span>
+            </Link>
+          </li>
+          <li className="group transition duration-300">
+            <Link href="/contact" className="font-signika text-2xl tap-highlight-transparent">
+              CONTACT
+              <span className="hidden md:block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black dark:bg-white"></span>
+            </Link>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
 
       {/* Main Content */}
       <div className="container mx-auto">
