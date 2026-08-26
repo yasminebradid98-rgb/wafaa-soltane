@@ -9,43 +9,42 @@ const client = createClient({
 
 export default async function Home() {
   const photos = await client.fetch(`*[_type == "photo"]{ _id, title, caption, "imageUrl": image.asset->url }`)
-  const videos = await client.fetch(`*[_type == "video"]{ _id, title, description, "videoUrl": videoFile.asset->url }`)
 
   return (
-    <main className="min-h-screen p-8 max-w-5xl mx-auto space-y-12">
-      <h1 className="text-4xl font-bold tracking-tight">Portfolio</h1>
+    <div className="min-h-screen bg-black text-white font-sans">
+      {/* Header Navigation */}
+      <header className="flex justify-between items-center px-12 py-8 border-b border-zinc-900">
+        <h1 className="text-xl font-bold tracking-widest uppercase">Wafaa Soltane</h1>
+        <nav className="flex space-x-8 text-sm font-semibold tracking-wider uppercase">
+          <a href="#photography" className="border-b-2 border-white pb-1">Photography</a>
+          <a href="#videography" className="text-zinc-400 hover:text-white transition-colors">Videography</a>
+          <a href="#about" className="text-zinc-400 hover:text-white transition-colors">About Me</a>
+          <a href="#contact" className="text-zinc-400 hover:text-white transition-colors">Contact</a>
+        </nav>
+      </header>
 
-      {/* Photos Section */}
-      <section className="space-y-4">
-        <h2 className="text-2xl font-semibold">Photos</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {/* Main Content Area */}
+      <main className="px-12 py-10 space-y-8">
+        <div>
+          <h2 className="text-4xl font-extrabold tracking-wider uppercase">Photography</h2>
+          <p className="text-zinc-400 text-lg mt-1 font-serif italic">Photographer & Visual Artist</p>
+        </div>
+
+        {/* Dynamic Photography Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {photos.map((photo: any) => (
-            <div key={photo._id} className="border p-4 rounded-lg space-y-2">
-              {photo.imageUrl && <img src={photo.imageUrl} alt={photo.title || 'Photo'} className="w-full h-64 object-cover rounded-md" />}
-              <h3 className="font-bold">{photo.title}</h3>
-              <p className="text-gray-600">{photo.caption}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Videos Section */}
-      <section className="space-y-4">
-        <h2 className="text-2xl font-semibold">Videos</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {videos.map((video: any) => (
-            <div key={video._id} className="border p-4 rounded-lg space-y-2">
-              {video.videoUrl && (
-                <video controls className="w-full rounded-md">
-                  <source src={video.videoUrl} />
-                </video>
+            <div key={photo._id} className="relative aspect-[4/5] overflow-hidden bg-zinc-900">
+              {photo.imageUrl && (
+                <img
+                  src={photo.imageUrl}
+                  alt={photo.title || 'Portfolio Image'}
+                  className="w-full h-full object-cover"
+                />
               )}
-              <h3 className="font-bold">{video.title}</h3>
-              <p className="text-gray-600">{video.description}</p>
             </div>
           ))}
         </div>
-      </section>
-    </main>
+      </main>
+    </div>
   )
 }
