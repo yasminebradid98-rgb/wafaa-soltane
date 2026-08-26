@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
-
+import './globals.css'; // Ajustez le chemin vers votre fichier CSS
 export const metadata: Metadata = {
   title: 'Wafaa Soltane - Photography',
   description: 'Wafaa Soltane – Photographer and visual artist capturing moments and stories.',
