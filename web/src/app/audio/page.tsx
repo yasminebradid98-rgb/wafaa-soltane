@@ -10,17 +10,20 @@ const client = createClient({
   useCdn: false,
 })
 
-export default async function AboutPage() {
-  const projects = await client.fetch(`
-    *[_type == "project"]{
-      _id,
-      title,
-      "slug": slug.current,
-      "hasPhotos": defined(photos) && count(photos) > 0,
-      "hasVideos": defined(videos) && count(videos) > 0,
-      "hasAudios": defined(audios) && count(audios) > 0
-    }
-  `)
+export default async function AudiographyPage() {
+  const [projects, audios] = await Promise.all([
+    client.fetch(`
+      *[_type == "project"]{
+        _id,
+        title,
+        "slug": slug.current,
+        "hasPhotos": defined(photos) && count(photos) > 0,
+        "hasVideos": defined(videos) && count(videos) > 0,
+        "hasAudios": defined(audios) && count(audios) > 0
+      }
+    `),
+    client.fetch(`*[_type == "audio"]{ _id, title, audioUrl }`),
+  ])
 
   const photoProjects = projects.filter((p: any) => p.hasPhotos)
   const videoProjects = projects.filter((p: any) => p.hasVideos)
@@ -138,11 +141,27 @@ export default async function AboutPage() {
       </header>
 
       {/* Main Content */}
-      <div className="container mx-auto py-10 max-w-3xl">
-        <h1 className="text-4xl font-bold uppercase mb-6">About Me</h1>
-        <p className="text-lg leading-relaxed text-gray-600 dark:text-gray-300 font-serif">
-          Wafaa Soltane is a photographer and visual artist exploring human stories, textures, and landscapes through photography, video, and audio art.
+      <div className="container mx-auto py-10">
+        <h1 className="text-4xl font-bold uppercase mb-2">Audiography</h1>
+        <p className="text-lg text-gray-500 dark:text-gray-400 font-serif mb-8">
+          Soundscapes & Audio Projects
         </p>
+
+        <div className="space-y-4 max-w-2xl">
+          {audios && audios.length > 0 ? (
+            audios.map((audio: any) => (
+              <div key={audio._id} className="p-4 border border-zinc-200 dark:border-zinc-800 rounded-sm">
+                {audio.title && <h3 className="font-semibold mb-2">{audio.title}</h3>}
+                <audio controls className="w-full">
+                  <source src={audio.audioUrl} />
+                  Your browser does not support the audio element.
+                </audio>
+              </div>
+            ))
+          ) : (
+            <p className="text-gray-400">No audio pieces published yet.</p>
+          )}
+        </div>
       </div>
     </div>
   )
