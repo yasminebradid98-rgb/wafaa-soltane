@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 
-// Projets avec leur contenu complet (Texte, Photos, Vidéos, Audios)
+// Données des projets
 const projectsData = {
   photography: [
     {
@@ -65,7 +65,11 @@ export default function Home() {
         <nav id="nav" role="navigation" className="w-full">
           <div className="container mx-auto flex flex-wrap items-center md:flex-no-wrap">
             <div className="mr-4 md:mr-8">
-              <Link href="/" className="text-2xl font-bold tracking-wide uppercase font-sans">
+              <Link
+                href="/"
+                onClick={() => setSelectedProject(null)}
+                className="text-2xl font-bold tracking-wide uppercase font-sans"
+              >
                 WAFAA SOLTANE
               </Link>
             </div>
@@ -151,64 +155,50 @@ export default function Home() {
         </nav>
       </header>
 
-      {/* Main Content */}
-      <div className="container mx-auto font-sans">
-        <div className="pt-10 pb-6">
-          <h1 className="text-4xl font-bold uppercase tracking-wide">PHOTOGRAPHY</h1>
-          <p className="text-lg text-gray-500 dark:text-gray-400 mt-2">
-            Photographer & Visual Artist
-          </p>
-        </div>
-      </div>
+      {/* Main Content Area */}
+      <div className="container mx-auto font-sans pt-10 pb-16">
+        {selectedProject ? (
+          /* SECTION PROJET SÉLECTIONNÉ (In-page view) */
+          <div className="space-y-8 animate-fadeIn">
+            <div className="flex items-center justify-between border-b border-zinc-200 dark:border-zinc-800 pb-4">
+              <h1 className="text-3xl md:text-5xl font-bold uppercase tracking-wide">
+                {selectedProject.title}
+              </h1>
+              <button
+                onClick={() => setSelectedProject(null)}
+                className="text-xs uppercase tracking-widest px-4 py-2 border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition rounded-sm"
+              >
+                ← Clear selection
+              </button>
+            </div>
 
-      {/* MODAL POP-UP (S'affiche lors du clic sur un projet) */}
-      {selectedProject && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 md:p-10 font-sans">
-          {/* Clic à l'extérieur pour fermer */}
-          <div className="absolute inset-0" onClick={() => setSelectedProject(null)} />
-
-          <div className="relative z-10 w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-white dark:bg-zinc-950 text-black dark:text-white p-6 md:p-12 rounded-sm shadow-2xl border border-zinc-200 dark:border-zinc-800">
-            {/* Bouton Fermer */}
-            <button
-              onClick={() => setSelectedProject(null)}
-              className="absolute top-4 right-6 text-2xl font-light hover:opacity-60 transition"
-            >
-              ✕
-            </button>
-
-            {/* Titre */}
-            <h2 className="text-2xl md:text-4xl font-bold uppercase tracking-wide mb-6">
-              {selectedProject.title}
-            </h2>
-
-            {/* Description */}
             {selectedProject.description && (
-              <p className="text-base md:text-lg text-zinc-700 dark:text-zinc-300 leading-relaxed font-normal whitespace-pre-line max-w-2xl mb-8">
+              <p className="text-lg md:text-xl text-zinc-700 dark:text-zinc-300 leading-relaxed font-normal whitespace-pre-line max-w-3xl">
                 {selectedProject.description}
               </p>
             )}
 
-            {/* Vidéo */}
+            {/* Lecteur Vidéo */}
             {selectedProject.videoUrl && (
-              <div className="mb-8 aspect-video w-full rounded-sm overflow-hidden bg-black">
+              <div className="aspect-video w-full max-w-4xl rounded-sm overflow-hidden bg-black my-6">
                 <video controls className="w-full h-full object-cover">
                   <source src={selectedProject.videoUrl} />
                 </video>
               </div>
             )}
 
-            {/* Audio */}
+            {/* Lecteur Audio */}
             {selectedProject.audioUrl && (
-              <div className="mb-8 p-4 border border-zinc-200 dark:border-zinc-800 rounded-sm">
+              <div className="max-w-2xl p-4 border border-zinc-200 dark:border-zinc-800 rounded-sm my-6">
                 <audio controls className="w-full">
                   <source src={selectedProject.audioUrl} />
                 </audio>
               </div>
             )}
 
-            {/* Galerie d'images */}
+            {/* Images du projet */}
             {selectedProject.images && selectedProject.images.length > 0 && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
                 {selectedProject.images.map((imgUrl: string, idx: number) => (
                   <div key={idx} className="overflow-hidden rounded-sm bg-zinc-100 dark:bg-zinc-900">
                     <img
@@ -221,11 +211,21 @@ export default function Home() {
               </div>
             )}
           </div>
-        </div>
-      )}
+        ) : (
+          /* VUE PAR DÉFAUT (Titre Photography) */
+          <div>
+            <div className="pb-6">
+              <h1 className="text-4xl font-bold uppercase tracking-wide">PHOTOGRAPHY</h1>
+              <p className="text-lg text-gray-500 dark:text-gray-400 mt-2">
+                Photographer & Visual Artist
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
 
       {/* Footer */}
-      <footer className="font-sans">
+      <footer className="font-sans border-t border-zinc-200 dark:border-zinc-900">
         <div className="max-w-screen-xl py-16 mx-auto">
           <div className="grid grid-cols-1 gap-8 text-center mx-auto">
             <div>
