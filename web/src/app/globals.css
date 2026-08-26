@@ -1,5 +1,12 @@
 /*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
-@layer properties;
+
+@import "tailwindcss";
+
+@layer utilities {
+  .font-signika {
+    font-family: 'Signika', sans-serif;
+  }
+}
 .sr-only {
   position: absolute;
   width: 1px;
