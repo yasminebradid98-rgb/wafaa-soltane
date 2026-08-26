@@ -1,37 +1,62 @@
+'use client'
+
+import { useState } from 'react'
 import Link from 'next/link'
-import { createClient } from 'next-sanity'
 
-export const dynamic = 'force-dynamic'
-
-const client = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || '4z3hno31',
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
-  apiVersion: '2024-01-01',
-  useCdn: false,
-})
-
-// Liste des projets en dur par catégorie
+// Projets avec leur contenu complet (Texte, Photos, Vidéos, Audios)
 const projectsData = {
   photography: [
-    { title: 'مرحومون / Marhoumoun', slug: 'marhoumoun' },
-    { title: 'La lumière des années noires', slug: 'la-lumiere-des-annees-noires' },
-    { title: 'Des souvenirs doux', slug: 'des-souvenirs-doux' },
-    { title: 'Matbanch 3lik (Ça se voit pas sur toi)', slug: 'matbanch-3lik' },
+    {
+      title: 'مرحومون / Marhoumoun',
+      description: 'Série photographique dédiée à la mémoire et au recueillement.',
+      images: ['/photos/marhoumoun-1.jpg', '/photos/marhoumoun-2.jpg'],
+    },
+    {
+      title: 'La lumière des années noires',
+      description: `Dans l'Algérie des années 90, la décennie noire, la violence semblait partout : dans les rues, dans les regards, jusque dans les silences. Pourtant, derrière les murs clos, dans les interstices de la peur, des femmes ont continué de vivre, de résister, de rêver. Elles ont porté, souvent seules, le poids des disparitions, des deuils, des incertitudes.
+
+Le début de cette série documentaire explore leurs voix, leurs luttes invisibles, leurs gestes du quotidien, en mêlant archives et récits intimes, pour rendre hommage à celles qui, dans la nuit de l'Histoire, ont maintenu la flamme de la vie.`,
+      images: ['/photos/annees-noires-1.jpg', '/photos/annees-noires-2.jpg'],
+    },
+    {
+      title: 'Des souvenirs doux',
+      description: 'Exploration visuelle des souvenirs intimes et nostalgiques.',
+      images: ['/photos/souvenirs-1.jpg'],
+    },
+    {
+      title: 'Matbanch 3lik (Ça se voit pas sur toi)',
+      description: 'Série sur les fardeaux invisibles et l’expression du regard.',
+      images: ['/photos/matbanch-1.jpg'],
+    },
   ],
   videography: [
-    { title: 'Marhoumoun — Lien sacré', slug: 'marhoumoun-lien-sacre' },
-    { title: 'La lumière des années noires', slug: 'la-lumiere-des-annees-noires-video' },
-    { title: 'Acte manqué', slug: 'acte-manque' },
+    {
+      title: 'Marhoumoun — Lien sacré',
+      description: 'Essai vidéo documentaire et artistique.',
+      videoUrl: '/videos/marhoumoun-lien-sacre.mp4',
+    },
+    {
+      title: 'La lumière des années noires',
+      description: 'Documentaire vidéo explorant les récits intimes et les voix des femmes.',
+      videoUrl: '/videos/annees-noires.mp4',
+    },
+    {
+      title: 'Acte manqué',
+      description: 'Court-métrage expérimental.',
+      videoUrl: '/videos/acte-manque.mp4',
+    },
   ],
   audiography: [
-    { title: 'مرحومون / Marhoumoun', slug: 'marhoumoun-audio' },
+    {
+      title: 'مرحومون / Marhoumoun',
+      description: 'Création sonore, récits et paysages acoustiques.',
+      audioUrl: '/audio/marhoumoun.mp3',
+    },
   ],
 }
 
-export default async function Home() {
-  const photos = await client.fetch(
-    `*[_type == "photo"]{ _id, title, caption, "imageUrl": image.asset->url }`
-  )
+export default function Home() {
+  const [selectedProject, setSelectedProject] = useState<any | null>(null)
 
   return (
     <div className="font-sans dark:bg-black bg-white min-h-screen text-black dark:text-white px-5 md:px-20">
@@ -50,64 +75,64 @@ export default async function Home() {
                 
                 {/* PHOTOGRAPHY */}
                 <li className="relative group py-2 transition duration-300">
-                  <Link href="/" className="text-xl font-normal tracking-wide tap-highlight-transparent uppercase">
+                  <span className="text-xl font-normal tracking-wide uppercase cursor-pointer">
                     PHOTOGRAPHY
                     <span className="hidden md:block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black dark:bg-white"></span>
-                  </Link>
-                  <div className="absolute left-0 top-full hidden group-hover:block bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-lg min-w-[240px] py-2 z-50 rounded-sm">
-                    {projectsData.photography.map((project) => (
-                      <Link
-                        key={project.slug}
-                        href={`/projects/${project.slug}`}
-                        className="block px-4 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-sm font-normal text-zinc-800 dark:text-zinc-200 transition duration-150"
+                  </span>
+                  <div className="absolute left-0 top-full hidden group-hover:block bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-lg min-w-[260px] py-2 z-50 rounded-sm">
+                    {projectsData.photography.map((project, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setSelectedProject(project)}
+                        className="w-full text-left block px-4 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-sm font-normal text-zinc-800 dark:text-zinc-200 transition duration-150"
                       >
                         {project.title}
-                      </Link>
+                      </button>
                     ))}
                   </div>
                 </li>
 
                 {/* VIDEOGRAPHY */}
                 <li className="relative group py-2 transition duration-300">
-                  <Link href="/videos" className="text-xl font-normal tracking-wide tap-highlight-transparent uppercase">
+                  <span className="text-xl font-normal tracking-wide uppercase cursor-pointer">
                     VIDEOGRAPHY
                     <span className="hidden md:block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black dark:bg-white"></span>
-                  </Link>
-                  <div className="absolute left-0 top-full hidden group-hover:block bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-lg min-w-[240px] py-2 z-50 rounded-sm">
-                    {projectsData.videography.map((project) => (
-                      <Link
-                        key={project.slug}
-                        href={`/projects/${project.slug}`}
-                        className="block px-4 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-sm font-normal text-zinc-800 dark:text-zinc-200 transition duration-150"
+                  </span>
+                  <div className="absolute left-0 top-full hidden group-hover:block bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-lg min-w-[260px] py-2 z-50 rounded-sm">
+                    {projectsData.videography.map((project, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setSelectedProject(project)}
+                        className="w-full text-left block px-4 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-sm font-normal text-zinc-800 dark:text-zinc-200 transition duration-150"
                       >
                         {project.title}
-                      </Link>
+                      </button>
                     ))}
                   </div>
                 </li>
 
                 {/* AUDIOGRAPHY */}
                 <li className="relative group py-2 transition duration-300">
-                  <Link href="/audiography" className="text-xl font-normal tracking-wide tap-highlight-transparent uppercase">
+                  <span className="text-xl font-normal tracking-wide uppercase cursor-pointer">
                     AUDIOGRAPHY
                     <span className="hidden md:block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black dark:bg-white"></span>
-                  </Link>
-                  <div className="absolute left-0 top-full hidden group-hover:block bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-lg min-w-[240px] py-2 z-50 rounded-sm">
-                    {projectsData.audiography.map((project) => (
-                      <Link
-                        key={project.slug}
-                        href={`/projects/${project.slug}`}
-                        className="block px-4 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-sm font-normal text-zinc-800 dark:text-zinc-200 transition duration-150"
+                  </span>
+                  <div className="absolute left-0 top-full hidden group-hover:block bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-lg min-w-[260px] py-2 z-50 rounded-sm">
+                    {projectsData.audiography.map((project, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setSelectedProject(project)}
+                        className="w-full text-left block px-4 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-sm font-normal text-zinc-800 dark:text-zinc-200 transition duration-150"
                       >
                         {project.title}
-                      </Link>
+                      </button>
                     ))}
                   </div>
                 </li>
 
                 {/* ABOUT ME */}
                 <li className="group transition duration-300 py-2">
-                  <Link href="/about" className="text-xl font-normal tracking-wide tap-highlight-transparent uppercase">
+                  <Link href="/about" className="text-xl font-normal tracking-wide uppercase">
                     ABOUT ME
                     <span className="hidden md:block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black dark:bg-white"></span>
                   </Link>
@@ -115,7 +140,7 @@ export default async function Home() {
 
                 {/* CONTACT */}
                 <li className="group transition duration-300 py-2">
-                  <Link href="/contact" className="text-xl font-normal tracking-wide tap-highlight-transparent uppercase">
+                  <Link href="/contact" className="text-xl font-normal tracking-wide uppercase">
                     CONTACT
                     <span className="hidden md:block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black dark:bg-white"></span>
                   </Link>
@@ -134,32 +159,70 @@ export default async function Home() {
             Photographer & Visual Artist
           </p>
         </div>
-
-        {/* Dynamic Photos Section */}
-        <section className="text-neutral-700 py-4">
-          <div className="container w-full">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {photos && photos.length > 0 ? (
-                photos.map((photo: any) => (
-                  <div key={photo._id} className="p-1">
-                    <div className="overflow-hidden h-full w-full rounded-sm bg-zinc-900">
-                      {photo.imageUrl && (
-                        <img
-                          alt={photo.title || photo.caption || 'Gallery Image'}
-                          className="block h-full w-full object-cover object-center transition duration-500 transform scale-100 hover:scale-110"
-                          src={photo.imageUrl}
-                        />
-                      )}
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <p className="text-gray-400 col-span-full font-sans">No photos published yet in Sanity Studio.</p>
-              )}
-            </div>
-          </div>
-        </section>
       </div>
+
+      {/* MODAL POP-UP (S'affiche lors du clic sur un projet) */}
+      {selectedProject && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 md:p-10 font-sans">
+          {/* Clic à l'extérieur pour fermer */}
+          <div className="absolute inset-0" onClick={() => setSelectedProject(null)} />
+
+          <div className="relative z-10 w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-white dark:bg-zinc-950 text-black dark:text-white p-6 md:p-12 rounded-sm shadow-2xl border border-zinc-200 dark:border-zinc-800">
+            {/* Bouton Fermer */}
+            <button
+              onClick={() => setSelectedProject(null)}
+              className="absolute top-4 right-6 text-2xl font-light hover:opacity-60 transition"
+            >
+              ✕
+            </button>
+
+            {/* Titre */}
+            <h2 className="text-2xl md:text-4xl font-bold uppercase tracking-wide mb-6">
+              {selectedProject.title}
+            </h2>
+
+            {/* Description */}
+            {selectedProject.description && (
+              <p className="text-base md:text-lg text-zinc-700 dark:text-zinc-300 leading-relaxed font-normal whitespace-pre-line max-w-2xl mb-8">
+                {selectedProject.description}
+              </p>
+            )}
+
+            {/* Vidéo */}
+            {selectedProject.videoUrl && (
+              <div className="mb-8 aspect-video w-full rounded-sm overflow-hidden bg-black">
+                <video controls className="w-full h-full object-cover">
+                  <source src={selectedProject.videoUrl} />
+                </video>
+              </div>
+            )}
+
+            {/* Audio */}
+            {selectedProject.audioUrl && (
+              <div className="mb-8 p-4 border border-zinc-200 dark:border-zinc-800 rounded-sm">
+                <audio controls className="w-full">
+                  <source src={selectedProject.audioUrl} />
+                </audio>
+              </div>
+            )}
+
+            {/* Galerie d'images */}
+            {selectedProject.images && selectedProject.images.length > 0 && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                {selectedProject.images.map((imgUrl: string, idx: number) => (
+                  <div key={idx} className="overflow-hidden rounded-sm bg-zinc-100 dark:bg-zinc-900">
+                    <img
+                      src={imgUrl}
+                      alt={`${selectedProject.title} ${idx + 1}`}
+                      className="w-full h-auto object-cover"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Footer */}
       <footer className="font-sans">
@@ -170,21 +233,6 @@ export default async function Home() {
               <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
                 Photographer & Visual Artist
               </p>
-              <div className="flex mx-auto">
-                <div className="mx-auto space-x-6 flex mt-6 text-gray-600 dark:text-gray-300">
-                  <a
-                    className="transition duration-300 hover:opacity-75"
-                    href="https://www.instagram.com/wafaa_sol/"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <span className="sr-only">Instagram</span>
-                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
-                      <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z" />
-                    </svg>
-                  </a>
-                </div>
-              </div>
             </div>
           </div>
           <p className="mt-8 text-xs text-gray-600 dark:text-gray-300 text-center">
