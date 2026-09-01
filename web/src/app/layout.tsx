@@ -3,7 +3,7 @@ import './globals.css'
 
 const outfit = Outfit({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600'],
+  weight: ['200', '300', '400'], // Télécharge les grandeurs très fines
   variable: '--font-outfit',
 })
 
@@ -14,7 +14,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr" className={outfit.variable}>
-      <body className="font-sans antialiased bg-[#e2e1dd] text-black">
+      <body className="font-sans antialiased bg-[#e2e1dd] text-[#1a1a1a]">
         {children}
       </body>
     </html>
