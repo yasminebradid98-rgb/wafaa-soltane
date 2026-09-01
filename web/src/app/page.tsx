@@ -2,13 +2,35 @@
 
 import { useState } from 'react'
 
+// Définition de l'objet du projet "Lien sacré" pour le réutiliser facilement dans les deux catégories
+const lienSacreProject = {
+  title: 'Lien sacré',
+  description: `Je vous invite à plonger dans une autre dimension, celle de nos mariages en Algérie, où chaque instant est une véritable symphonie d'émotions, de traditions et de couleurs. Ici, la présence des femmes s’impose naturellement, du début à la fin des festivités.
+
+Dès les premiers préparatifs, ce sont elles qui dirigent. Mères, tantes, sœurs et amies se réunissent pour veiller à chaque détail avec une minutie sans faille. Qu’il s’agisse du choix des tenues, des bijoux ou des plats à servir, tout passe entre leurs mains habiles. Leur savoir-faire et leur engagement transforment cette période en un moment de solidarité intense. Derrière chaque geste se cache la détermination de rendre ce mariage exceptionnel.
+
+La mariée est au cœur de toutes les attentions, entourée de celles qui lui prodiguent conseils et soutien dans cette étape importante de sa vie. Quand elle quitte la maison familiale, l'émotion est palpable, marquée par des larmes et des sourires mêlés. Ce moment, empreint de traditions, est aussi une démonstration de l'unité et de l’affection qui lient les femmes autour de cet événement. Ce passage n’est pas seulement un adieu, c’est une étape de transmission où elles l’accompagnent vers un nouveau chapitre.
+
+Tout au long des festivités, l’enthousiasme des femmes anime la célébration. Elles chantent, dansent, et célèbrent l’union avec une joie et une vitalité qui insufflent une énergie unique. Leur présence, bien plus qu’un simple ornement, est l’essence de ces rassemblements. Elles incarnent la continuité des traditions tout en apportant un vent de modernité et d’innovation. Les mariages algériens sont ainsi le reflet de cet équilibre délicat entre respect des coutumes et adaptation à une époque nouvelle.
+
+Même face aux défis et tensions qui peuvent surgir durant les préparatifs, ce sont souvent elles qui trouvent les mots pour apaiser les esprits et faire de chaque obstacle une opportunité de renforcer les liens. Leur rôle ne se limite pas à la coordination ; elles apportent une sagesse et une sérénité indispensables.
+
+Le mariage algérien, dans son essence, repose en grande partie sur leur engagement et leur soutien. Elles sont les gardiennes des traditions, les architectes de cette célébration, assurant que l’union des deux êtres soit magnifiée à chaque étape. Peu importe le nombre d’invités ou les imprévus, leur contribution fait de chaque mariage un moment unique et inoubliable.
+
+Je vous invite donc à découvrir l’univers de nos mariages algériens, où l’amour et la complicité féminine se tissent pour créer des souvenirs précieux. Venez vivre ces instants de bonheur où se mêlent tradition, émotion et modernité, portés par la grâce et l’engagement des femmes.`,
+  videoUrl: '/videos/lien-sacre.mp4',
+  images: [
+    '/photos/lien-sacre-1.jpg',
+    '/photos/lien-sacre-2.jpg',
+    '/photos/lien-sacre-3.jpg',
+  ],
+}
+
 const projectsData = {
   photography: [
     {
       title: 'La lumière des années noires',
-      description: `Dans l'Algérie des années 90, la décennie noire, la violence semblait partout : dans les rues, dans les regards, jusque dans les silences. Pourtant, derrière les murs clos, dans les interstices de la peur, des femmes ont continué de vivre, de résister, de rêver. Elles ont porté, souvent seules, le poids des disparitions, des deuils, des incertitudes.
-
-Le début de cette série documentaire explore leurs voix, leurs luttes invisibles, leurs gestes du quotidien, en mêlant archives et récits intimes, pour rendre hommage à celles qui, dans la nuit de l'Histoire, ont maintenu la flamme de la vie.`,
+      description: `Dans l'Algérie des années 90, la décennie noire, la violence semblait partout : dans les rues, dans les regards, jusque dans les silences. Pourtant, derrière les murs clos, dans les interstices de la peur, des femmes ont continué de vivre, de résister, de rêver...`,
       images: ['/photos/annees-noires-1.jpg', '/photos/annees-noires-2.jpg'],
     },
     {
@@ -16,13 +38,16 @@ Le début de cette série documentaire explore leurs voix, leurs luttes invisibl
       description: 'Série photographique dédiée à la mémoire et au recueillement.',
       images: ['/photos/marhoumoun-1.jpg'],
     },
+    lienSacreProject, // Inclus dans Photography
     {
       title: 'Des Souvenirs Doux',
       description: 'Exploration visuelle des souvenirs intimes et nostalgiques.',
       images: ['/photos/souvenirs-1.jpg'],
     },
   ],
-  videography: [],
+  videography: [
+    lienSacreProject, // Inclus dans Videography (charge la même vue)
+  ],
   audiography: [],
 }
 
@@ -41,14 +66,34 @@ export default function Home() {
             Biographie
           </button>
 
-          {/* Dropdown Projets */}
+          {/* PHOTOGRAPHY */}
           <div className="relative group">
             <span className="cursor-pointer hover:text-black transition duration-300 py-2">
-              Projets
+              Photography
             </span>
             <div className="absolute left-1/2 -translate-x-1/2 top-full hidden group-hover:block pt-3 w-56 text-center z-50">
               <div className="bg-[#e2e1dd]/90 backdrop-blur-md p-3 border border-zinc-400/20 shadow-sm space-y-2">
                 {projectsData.photography.map((project, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setSelectedProject(project)}
+                    className="block w-full text-[11px] tracking-wide font-extralight text-zinc-700 hover:text-black transition duration-200"
+                  >
+                    {project.title}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* VIDEOGRAPHY */}
+          <div className="relative group">
+            <span className="cursor-pointer hover:text-black transition duration-300 py-2">
+              Videography
+            </span>
+            <div className="absolute left-1/2 -translate-x-1/2 top-full hidden group-hover:block pt-3 w-56 text-center z-50">
+              <div className="bg-[#e2e1dd]/90 backdrop-blur-md p-3 border border-zinc-400/20 shadow-sm space-y-2">
+                {projectsData.videography.map((project, idx) => (
                   <button
                     key={idx}
                     onClick={() => setSelectedProject(project)}
@@ -85,14 +130,23 @@ export default function Home() {
               </button>
             </div>
 
-            {/* Texte descriptif très fin */}
+            {/* Texte descriptif très fin et lisible */}
             {selectedProject.description && (
               <div className="text-xs md:text-sm leading-relaxed font-extralight text-zinc-700 whitespace-pre-line max-w-lg ml-auto">
                 {selectedProject.description}
               </div>
             )}
 
-            {/* Images */}
+            {/* Extrait Vidéo (si présent) */}
+            {selectedProject.videoUrl && (
+              <div className="aspect-video w-full my-8 bg-black/5">
+                <video controls className="w-full h-full object-cover">
+                  <source src={selectedProject.videoUrl} />
+                </video>
+              </div>
+            )}
+
+            {/* Images du projet */}
             {selectedProject.images && selectedProject.images.length > 0 && (
               <div className="space-y-8 pt-4">
                 {selectedProject.images.map((imgUrl: string, idx: number) => (
