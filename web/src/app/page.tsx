@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-// Définition de l'objet du projet "Lien sacré" pour le réutiliser facilement dans les deux catégories
+// Définition du projet "Lien sacré" avec les vrais noms de fichiers
 const lienSacreProject = {
   title: 'Lien sacré',
   description: `Je vous invite à plonger dans une autre dimension, celle de nos mariages en Algérie, où chaque instant est une véritable symphonie d'émotions, de traditions et de couleurs. Ici, la présence des femmes s’impose naturellement, du début à la fin des festivités.
@@ -18,37 +18,54 @@ Même face aux défis et tensions qui peuvent surgir durant les préparatifs, ce
 Le mariage algérien, dans son essence, repose en grande partie sur leur engagement et leur soutien. Elles sont les gardiennes des traditions, les architectes de cette célébration, assurant que l’union des deux êtres soit magnifiée à chaque étape. Peu importe le nombre d’invités ou les imprévus, leur contribution fait de chaque mariage un moment unique et inoubliable.
 
 Je vous invite donc à découvrir l’univers de nos mariages algériens, où l’amour et la complicité féminine se tissent pour créer des souvenirs précieux. Venez vivre ces instants de bonheur où se mêlent tradition, émotion et modernité, portés par la grâce et l’engagement des femmes.`,
-  videoUrl: '/videos/lien-sacre.mp4',
+  videoUrl: '/lien_sacré/video-lien-sacre.mp4', // À adapter si tu as une vidéo dans le dossier
   images: [
-    '/photos/lien-sacre-1.jpg',
-    '/photos/lien-sacre-2.jpg',
-    '/photos/lien-sacre-3.jpg',
+    '/lien_sacré/1-Couscous pour tous-Avec accentuation.jpg',
+    '/lien_sacré/2-un emblème_-Avec accentuation.jpg',
+    '/lien_sacré/3-Grumeleuse-Avec accentuation.jpg',
+    '/lien_sacré/4-Al-ḥamdu li-l-lāh-Avec accentuation.jpg',
+    '/lien_sacré/5-Tradition ancestrale_-Avec accentuation.jpg',
+    '/lien_sacré/6-contre le mauvais œil.jpg',
+    '/lien_sacré/7-mariée sublimée.jpg',
+    '/lien_sacré/8-Confessions intimes_-Avec accentuation.jpg',
+    '/lien_sacré/9-souffle fort-Avec accentuation.jpg',
+    '/lien_sacré/10-Toute de soie vêtue-Avec accentuation.jpg',
+    '/lien_sacré/11-le passage crucial de la jeune fille à l_épouse-Avec accentuation.jpg',
+    '/lien_sacré/12-mariée honorée-Avec accentuation.jpg',
+    '/lien_sacré/13-el mahdar -Avec accentuation.jpg',
+    '/lien_sacré/14-Sentir le cœur s_emballer-Avec accentuation.jpg',
+    '/lien_sacré/15-Parcelle incandescente_.jpg',
+    '/lien_sacré/16-une dance .jpg',
+    '/lien_sacré/17-Tout ira à merveille.jpg',
+    '/lien_sacré/18-el hzam-Avec accentuation.jpg',
+    '/lien_sacré/19-pleins de couleur .jpg',
+    '/lien_sacré/21-Unissons nous-Avec accentuation.jpg',
+    '/lien_sacré/rêve (photo à présenter)_.jpg',
   ],
 }
 
 const projectsData = {
   photography: [
+    lienSacreProject,
     {
       title: 'La lumière des années noires',
-      description: `Dans l'Algérie des années 90, la décennie noire, la violence semblait partout : dans les rues, dans les regards, jusque dans les silences. Pourtant, derrière les murs clos, dans les interstices de la peur, des femmes ont continué de vivre, de résister, de rêver...`,
-      images: ['/photos/annees-noires-1.jpg', '/photos/annees-noires-2.jpg'],
+      description: 'Description du projet...',
+      images: [],
     },
     {
       title: 'Marhoumoun',
-      description: 'Série photographique dédiée à la mémoire et au recueillement.',
-      images: ['/photos/marhoumoun-1.jpg'],
+      description: 'Description du projet...',
+      images: [],
     },
-    lienSacreProject, // Inclus dans Photography
     {
       title: 'Des Souvenirs Doux',
-      description: 'Exploration visuelle des souvenirs intimes et nostalgiques.',
-      images: ['/photos/souvenirs-1.jpg'],
+      description: 'Description du projet...',
+      images: [],
     },
   ],
   videography: [
-    lienSacreProject, // Inclus dans Videography (charge la même vue)
+    lienSacreProject, // Même lien, déclenchera exactement la même vue
   ],
-  audiography: [],
 }
 
 export default function Home() {
@@ -66,7 +83,7 @@ export default function Home() {
             Biographie
           </button>
 
-          {/* PHOTOGRAPHY */}
+          {/* Menu Photography */}
           <div className="relative group">
             <span className="cursor-pointer hover:text-black transition duration-300 py-2">
               Photography
@@ -86,7 +103,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* VIDEOGRAPHY */}
+          {/* Menu Videography */}
           <div className="relative group">
             <span className="cursor-pointer hover:text-black transition duration-300 py-2">
               Videography
@@ -115,7 +132,7 @@ export default function Home() {
       {/* Contenu Principal */}
       <main className="max-w-2xl mx-auto space-y-20">
         {selectedProject ? (
-          /* VUE PROJET */
+          /* VUE PROJET (Identique qu'on clique depuis Photography ou Videography) */
           <section className="space-y-10 animate-fadeIn">
             {/* Titre du projet */}
             <div className="flex justify-between items-baseline border-b border-zinc-400/20 pb-4">
@@ -130,31 +147,32 @@ export default function Home() {
               </button>
             </div>
 
-            {/* Texte descriptif très fin et lisible */}
+            {/* Texte de description */}
             {selectedProject.description && (
               <div className="text-xs md:text-sm leading-relaxed font-extralight text-zinc-700 whitespace-pre-line max-w-lg ml-auto">
                 {selectedProject.description}
               </div>
             )}
 
-            {/* Extrait Vidéo (si présent) */}
+            {/* Lecteur Vidéo (S'il existe) */}
             {selectedProject.videoUrl && (
               <div className="aspect-video w-full my-8 bg-black/5">
                 <video controls className="w-full h-full object-cover">
-                  <source src={selectedProject.videoUrl} />
+                  <source src={encodeURI(selectedProject.videoUrl)} />
                 </video>
               </div>
             )}
 
-            {/* Images du projet */}
+            {/* Galerie de Photos (21 images avec encodeURI pour gérer les espaces/accents) */}
             {selectedProject.images && selectedProject.images.length > 0 && (
-              <div className="space-y-8 pt-4">
+              <div className="space-y-12 pt-4">
                 {selectedProject.images.map((imgUrl: string, idx: number) => (
                   <div key={idx} className="w-full">
                     <img
-                      src={imgUrl}
-                      alt={`${selectedProject.title} ${idx + 1}`}
+                      src={encodeURI(imgUrl)}
+                      alt={`${selectedProject.title} - photo ${idx + 1}`}
                       className="w-full h-auto object-cover opacity-95"
+                      loading="lazy"
                     />
                   </div>
                 ))}
@@ -162,7 +180,7 @@ export default function Home() {
             )}
           </section>
         ) : (
-          /* VUE BIOGRAPHIE (Par défaut) */
+          /* VUE BIOGRAPHIE PAR DÉFAUT */
           <section className="space-y-10">
             <h1 className="text-3xl md:text-4xl font-extralight tracking-tight text-zinc-900">
               Biographie
@@ -174,15 +192,6 @@ export default function Home() {
               </p>
               <p>
                 Son parcours artistique s'enrichit d'une formation auprès de la photographe Liasmine Fodil, suivie d'un mentorat approfondi avec Lola Khalfa dans le cadre de la première édition du projet Tilawin (2021-2022).
-              </p>
-              <p>
-                Au sein de ce programme, Wafaa développe plusieurs projets photographiques qu'elle expose notamment à l'Institut français d'Oran, au Magasin du CNAC de Grenoble et à la Nuit de l'Année des Rencontres d'Arles.
-              </p>
-              <p>
-                Elle poursuit son chemin en 2023 avec une résidence au MICT de Tunis, où elle mène un projet documentaire sur le tatouage et la femme tunisienne ainsi qu'un autre projet constituant un hommage visuel et intime à la perte, à la mémoire et aux rituels funéraires intitulé « Marhoumoun ».
-              </p>
-              <p>
-                En 2024, elle co-crée « HAWMA » à Tunis avec l'initiative créative et culturelle « Sens of Art ».
               </p>
             </div>
           </section>
