@@ -5,15 +5,14 @@ import { useState, useEffect } from 'react'
 const lienSacreProject = {
   id: 'lien-sacre',
   title: 'Lien sacré',
-  description: `Je vous invite à plonger dans une autre dimension, celle de nos mariages en Algérie...`,
+  description: `Une immersion au cœur des mariages en Algérie, mettant en lumière le rôle central et la transmission des traditions par les femmes.`,
   images: Array.from({ length: 21 }, (_, i) => `/liensacre/${i + 1}.jpg`),
 }
 
 const marhoumounProject = {
   id: 'marhoumoun',
   title: 'مرحومون / Marhoumoun',
-  description: `La mort n’a pas de sens...`,
-  // Remplacez videoUrl par votre fichier local /marhoumoun/video.mp4 ou un lien MP4/YouTube
+  description: `La mort n’a pas de sens. Dans ce projet, je retrace les trois jours qui suivent un décès en Oranie. Les membres de la famille mettent leur chagrin de côté pour accueillir, nourrir, prendre soin des invités. Ici, les vivants prennent le dessus, masquant la douleur derrière les gestes et les rituels.`,
   videoUrl: '/marhoumoun/video.mp4', 
   audioUrl: '/marhoumoun/audio.mp3',
   images: Array.from({ length: 57 }, (_, i) => `/marhoumoun/${i + 1}.jpeg`),
@@ -30,7 +29,7 @@ export default function Home() {
   const [darkMode, setDarkMode] = useState(true)
   const [activeMenu, setActiveMenu] = useState<string | null>(null)
 
-  // État du Carrousel
+  // Index de l'image sélectionnée dans le carrousel
   const [carouselIndex, setCarouselIndex] = useState(0)
   const [activeImageIndex, setActiveImageIndex] = useState<number | null>(null)
 
@@ -78,9 +77,10 @@ export default function Home() {
         </button>
       </div>
 
-      <div className="px-6 md:px-20 py-12 max-w-5xl mx-auto">
-        <header className="mb-16 relative z-30">
-          <nav className="flex flex-wrap justify-center gap-8 text-[11px] uppercase tracking-[0.3em] font-extralight">
+      <div className="px-6 md:px-16 py-8 max-w-4xl mx-auto">
+        {/* Navigation principale */}
+        <header className="mb-10 relative z-30">
+          <nav className="flex flex-wrap justify-center gap-6 text-[11px] uppercase tracking-[0.3em] font-extralight">
             <button
               onClick={() => {
                 setSelectedProject(null)
@@ -105,7 +105,7 @@ export default function Home() {
                   }`}
                 >
                   <div
-                    className={`p-5 border shadow-2xl space-y-3 backdrop-blur-xl rounded-sm ${
+                    className={`p-4 border shadow-2xl space-y-2 backdrop-blur-xl rounded-sm ${
                       darkMode ? 'bg-zinc-900/95 border-zinc-800' : 'bg-[#e2e1dd]/95 border-zinc-300'
                     }`}
                   >
@@ -113,7 +113,7 @@ export default function Home() {
                       <button
                         key={project.id}
                         onClick={() => handleSelectProject(project)}
-                        className="block w-full text-[11px] text-left opacity-70 hover:opacity-100"
+                        className="block w-full text-[11px] text-left opacity-70 hover:opacity-100 py-1"
                       >
                         {project.title}
                       </button>
@@ -125,11 +125,12 @@ export default function Home() {
           </nav>
         </header>
 
-        <main className="max-w-2xl mx-auto space-y-12 relative z-10">
+        <main className="max-w-2xl mx-auto space-y-8 relative z-10">
           {selectedProject ? (
-            <section className="space-y-10 animate-fadeIn">
-              <div className="flex justify-between items-baseline border-b border-zinc-500/20 pb-4">
-                <h1 className="text-2xl font-extralight">{selectedProject.title}</h1>
+            <section className="space-y-6 animate-fadeIn">
+              {/* Entête du Projet */}
+              <div className="flex justify-between items-baseline border-b border-zinc-500/20 pb-3">
+                <h1 className="text-xl font-extralight tracking-wide">{selectedProject.title}</h1>
                 <button
                   onClick={() => setSelectedProject(null)}
                   className="text-[10px] tracking-widest uppercase opacity-40 hover:opacity-100"
@@ -138,16 +139,17 @@ export default function Home() {
                 </button>
               </div>
 
+              {/* Description courte */}
               {selectedProject.description && (
                 <p className="text-xs md:text-sm leading-relaxed font-extralight opacity-85 whitespace-pre-line">
                   {selectedProject.description}
                 </p>
               )}
 
-              {/* Player Audio Corrigé */}
+              {/* Player Audio */}
               {selectedProject.audioUrl && (
                 <div
-                  className={`p-4 rounded-lg border space-y-2 ${
+                  className={`p-3 rounded-lg border space-y-1 ${
                     darkMode ? 'border-zinc-800 bg-zinc-900/50' : 'border-zinc-300 bg-zinc-200/40'
                   }`}
                 >
@@ -156,29 +158,27 @@ export default function Home() {
                   </p>
                   <audio controls preload="metadata" className="w-full h-8 opacity-80 hover:opacity-100">
                     <source src={selectedProject.audioUrl} type="audio/mpeg" />
-                    Votre navigateur ne supporte pas l'élément audio.
                   </audio>
                 </div>
               )}
 
-              {/* Player Vidéo Direct (Sans blocage Vimeo) */}
+              {/* Player Vidéo */}
               {selectedProject.videoUrl && (
                 <div className="w-full rounded-lg overflow-hidden border border-zinc-500/10 shadow-lg bg-black">
                   <video
                     controls
                     preload="metadata"
-                    className="w-full h-auto max-h-[450px]"
+                    className="w-full h-auto max-h-[350px]"
                   >
                     <source src={selectedProject.videoUrl} type="video/mp4" />
-                    Votre navigateur ne supporte pas la lecture vidéo.
                   </video>
                 </div>
               )}
 
-              {/* CARROUSEL DE PHOTOS (Remplaçant la longue liste) */}
+              {/* CARROUSEL COMPACT AVEC MINIATURES */}
               {selectedProject.images && selectedProject.images.length > 0 && (
-                <div className="space-y-4 pt-4">
-                  <div className="relative group overflow-hidden rounded-sm bg-black/5 aspect-[4/3] flex items-center justify-center">
+                <div className="space-y-3 pt-2">
+                  <div className="relative group overflow-hidden rounded-sm bg-black/10 h-[400px] flex items-center justify-center">
                     <img
                       src={selectedProject.images[carouselIndex]}
                       alt={`${selectedProject.title} - ${carouselIndex + 1}`}
@@ -186,33 +186,56 @@ export default function Home() {
                       onClick={() => setActiveImageIndex(carouselIndex)}
                     />
 
-                    {/* Flèches du Carrousel */}
+                    {/* Flèches de navigation */}
                     <button
                       onClick={prevSlide}
-                      className="absolute left-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/80 text-white p-2 rounded-full text-xs transition"
+                      className="absolute left-3 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/90 text-white w-8 h-8 rounded-full text-sm flex items-center justify-center transition"
                     >
                       ‹
                     </button>
                     <button
                       onClick={nextSlide}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/80 text-white p-2 rounded-full text-xs transition"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/90 text-white w-8 h-8 rounded-full text-sm flex items-center justify-center transition"
                     >
                       ›
                     </button>
 
                     <span className="absolute bottom-3 right-3 text-[9px] tracking-widest text-white/80 bg-black/60 px-2 py-1 backdrop-blur-sm rounded">
-                      {carouselIndex + 1} / {selectedProject.images.length} [Cliquer pour agrandir]
+                      {carouselIndex + 1} / {selectedProject.images.length}
                     </span>
+                  </div>
+
+                  {/* Bande de miniatures pour accès rapide */}
+                  <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-thin">
+                    {selectedProject.images.map((img: string, idx: number) => (
+                      <button
+                        key={idx}
+                        onClick={() => setCarouselIndex(idx)}
+                        className={`relative flex-shrink-0 w-12 h-12 rounded-sm overflow-hidden border transition-all ${
+                          carouselIndex === idx
+                            ? 'border-white opacity-100 scale-105'
+                            : 'border-transparent opacity-40 hover:opacity-80'
+                        }`}
+                      >
+                        <img src={img} alt="" className="w-full h-full object-cover" />
+                      </button>
+                    ))}
                   </div>
                 </div>
               )}
             </section>
           ) : (
+            /* Vue Biographie */
             <section className="space-y-6">
-              <h1 className="text-3xl font-extralight">Biographie</h1>
-              <p className="text-xs md:text-sm leading-relaxed opacity-80">
-                WAFAA SOLTANE, née en 1994 à Oran, a étudié la littérature française à l'Université d'Oran avant de se tourner vers la photographie documentaire...
-              </p>
+              <h1 className="text-2xl font-extralight">Biographie</h1>
+              <div className="text-xs md:text-sm leading-relaxed font-extralight opacity-80 space-y-4">
+                <p>
+                  <strong className="font-normal">WAFAA SOLTANE</strong>, née en 1994 à Oran, a étudié la littérature française à l'Université d'Oran avant de se tourner vers la photographie documentaire.
+                </p>
+                <p>
+                  Son parcours artistique s'enrichit d'une formation auprès de la photographe Liasmine Fodil, suivie d'un mentorat approfondi avec Lola Khalfa dans le cadre de la première édition du projet Tilawin (2021-2022).
+                </p>
+              </div>
             </section>
           )}
         </main>
