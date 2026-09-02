@@ -66,24 +66,26 @@ export default function Home() {
         darkMode ? 'bg-zinc-950 text-zinc-100' : 'bg-[#e2e1dd] text-zinc-900'
       }`}
     >
-      {/* Theme Toggle */}
-      <div className="fixed top-6 right-6 z-50">
-        <button
-          onClick={() => setDarkMode(!darkMode)}
-          className={`text-[10px] tracking-[0.2em] uppercase px-4 py-2 rounded-full border transition-all ${
-            darkMode
-              ? 'border-zinc-800 text-zinc-400 bg-zinc-900/80'
-              : 'border-zinc-300 text-zinc-600 bg-[#e2e1dd]/80'
-          }`}
-        >
-          {darkMode ? '☀️ Light' : '🌙 Dark'}
-        </button>
-      </div>
+      {/* Container principal */}
+      <div className="px-4 sm:px-8 md:px-16 py-6 max-w-4xl mx-auto">
+        
+        {/* Navigation & Switch Theme */}
+        <header className="mb-10 relative z-30 space-y-6">
+          {/* Toggle Theme - Repositionné pour mobile */}
+          <div className="flex justify-end">
+            <button
+              onClick={() => setDarkMode(!darkMode)}
+              className={`text-[10px] tracking-[0.2em] uppercase px-3 py-1.5 rounded-full border transition-all ${
+                darkMode
+                  ? 'border-zinc-800 text-zinc-400 bg-zinc-900/80'
+                  : 'border-zinc-300 text-zinc-600 bg-[#e2e1dd]/80'
+              }`}
+            >
+              {darkMode ? '☀️ Light' : '🌙 Dark'}
+            </button>
+          </div>
 
-      <div className="px-6 md:px-16 py-8 max-w-4xl mx-auto">
-        {/* Navigation */}
-        <header className="mb-10 relative z-30">
-          <nav className="flex flex-wrap justify-center gap-6 text-[11px] uppercase tracking-[0.3em] font-extralight">
+          <nav className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 text-[11px] uppercase tracking-[0.25em] font-extralight">
             <button
               onClick={() => {
                 setSelectedProject(null)
@@ -291,7 +293,7 @@ export default function Home() {
               {/* Carousel Optimsé */}
               {selectedProject.images && selectedProject.images.length > 0 && (
                 <div className="space-y-3 pt-2">
-                  <div className="relative group overflow-hidden rounded-sm bg-black/20 h-[450px] w-full flex items-center justify-center">
+                  <div className="relative group overflow-hidden rounded-sm bg-black/20 h-[320px] sm:h-[450px] w-full flex items-center justify-center">
                     <Image
                       src={selectedProject.images[carouselIndex]}
                       alt={`${selectedProject.title} - ${carouselIndex + 1}`}
