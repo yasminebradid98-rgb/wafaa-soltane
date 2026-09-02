@@ -1,11 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
-// 1. PROJET : LIEN SACRÉ (Mariages en Algérie)
+// 1. PROJET : LIEN SACRÉ
 const lienSacreProject = {
+  id: 'lien-sacre',
   title: 'Lien sacré',
-  description: `Je vous invite à plonger dans une autre dimension, celle de nos mariages en Algérie, où chaque instant est une véritable symphonie d'émotions, de traditions et de couleurs. Ici, la présence des femmes s’impose naturellement, du début à la fin des festivités.
+  description: `Je vous invite à plonger dans une autre dimension, celle de nos mariages en Algérie, où chaque instant est une véritable symphonie d'émotions, de traditions et de couleurs. Ici, la présence des femmes s’impose naturally, du début à la fin des festivités.
 
 Dès les premiers préparatifs, ce sont elles qui dirigent. Mères, tantes, sœurs et amies se réunissent pour veiller à chaque détail avec une minutie sans faille. Qu’il s’agisse du choix des tenues, des bijoux ou des plats à servir, tout passe entre leurs mains habiles. Leur savoir-faire et leur engagement transforment cette période en un moment de solidarité intense. Derrière chaque geste se cache la détermination de rendre ce mariage exceptionnel.
 
@@ -18,231 +19,341 @@ Même face aux défis et tensions qui peuvent surgir durant les préparatifs, ce
 Le mariage algérien, dans son essence, repose en grande partie sur leur engagement et leur soutien. Elles sont les gardiennes des traditions, les architectes de cette célébration, assurant que l’union des deux êtres soit magnifiée à chaque étape. Peu importe le nombre d’invités ou les imprévus, leur contribution fait de chaque mariage un moment unique et inoubliable.
 
 Je vous invite donc à découvrir l’univers de nos mariages algériens, où l’amour et la complicité féminine se tissent pour créer des souvenirs précieux. Venez vivre ces instants de bonheur où se mêlent tradition, émotion et modernité, portés par la grâce et l’engagement des femmes.`,
-  videoUrl: '/lien_sacré/video-lien-sacre.mp4',
-  images: [
-    '/lien_sacré/1-Couscous pour tous-Avec accentuation.jpg',
-    '/lien_sacré/2-un emblème_-Avec accentuation.jpg',
-    '/lien_sacré/3-Grumeleuse-Avec accentuation.jpg',
-    '/lien_sacré/4-Al-ḥamdu li-l-lāh-Avec accentuation.jpg',
-    '/lien_sacré/5-Tradition ancestrale_-Avec accentuation.jpg',
-    '/lien_sacré/6-contre le mauvais œil.jpg',
-    '/lien_sacré/7-mariée sublimée.jpg',
-    '/lien_sacré/8-Confessions intimes_-Avec accentuation.jpg',
-    '/lien_sacré/9-souffle fort-Avec accentuation.jpg',
-    '/lien_sacré/10-Toute de soie vêtue-Avec accentuation.jpg',
-    '/lien_sacré/11-le passage crucial de la jeune fille à l_épouse-Avec accentuation.jpg',
-    '/lien_sacré/12-mariée honorée-Avec accentuation.jpg',
-    '/lien_sacré/13-el mahdar -Avec accentuation.jpg',
-    '/lien_sacré/14-Sentir le cœur s_emballer-Avec accentuation.jpg',
-    '/lien_sacré/15-Parcelle incandescente_.jpg',
-    '/lien_sacré/16-une dance .jpg',
-    '/lien_sacré/17-Tout ira à merveille.jpg',
-    '/lien_sacré/18-el hzam-Avec accentuation.jpg',
-    '/lien_sacré/19-pleins de couleur .jpg',
-    '/lien_sacré/21-Unissons nous-Avec accentuation.jpg',
-    '/lien_sacré/rêve (photo à présenter)_.jpg',
-  ],
+  images: Array.from({ length: 21 }, (_, i) => `/liensacre/${i + 1}.jpg`),
 }
 
-// 2. PROJET : MARHOUMOUN (Mémoire et rituels funéraires)
+// 2. PROJET : MARHOUMOUN
 const marhoumounProject = {
+  id: 'marhoumoun',
   title: 'مرحومون / Marhoumoun',
-  description: 'Un hommage visuel et intime à la perte, à la mémoire et aux rituels funéraires.',
-  videoUrl: '/videos/marhoumoun.mp4',
-  images: ['/photos/marhoumoun-1.jpg', '/photos/marhoumoun-2.jpg'],
+  description: `La mort n’a pas de sens.
+
+Quand le téléphone sonne et qu'on entend « Allah akbar » ou un hurlement, une larme silencieuse qui tombe et un « Inna lillah wa inna ilayhi raji'oun », cet appel n'est que le premier pour annoncer un décès. Il faut ensuite l’annoncer au reste de la maison en restant courageux et fort, puisque ce n’est pas le moment de craquer.
+
+Je me rappelle du décès de mon grand-père. Je n'étais qu'une petite fille, je ne sais pas qui avait appelé. Je suis descendue par les escaliers, j'ai ouvert la porte et là, je vois notre voisine qui m’a retenue et qui disait ne pas s'attendre à ce qu'une gamine puisse avoir autant de force. C’était le premier décès d’un proche que j’ai vécu.
+
+Avec le temps, on comprend que c’est juste une autre étape de la vie, qu'on va tous y passer un jour et être dans les deux camps : el motaazi et el moaazi. Et puis un jour, on sera el marhoum / el marhouma.
+
+La mort ne frappe jamais à la porte pour nous prévenir. Dans ce projet, je retrace les trois jours qui suivent un décès en Oranie. Les membres de la famille mettent leur chagrin de côté pour accueillir, nourrir, prendre soin des invités. À chaque enterrement, le même scénario se répète. Et à chaque fois, je me surprends à espérer qu’un jour, nous pourrons pleurer. Pleurer librement.
+
+Ici, les vivants prennent le dessus, masquant la douleur derrière les gestes, les plats servis, les formules échangées. Le mort, lui, est en paix. Ce qui reste à porter, c’est la charge des vivants.
+
+Le son que vous entendez est composé d’enregistrements réalisés durant les funérailles.
+
+« On meurt tous plusieurs fois dans une vie. »`,
+  vimeoUrl: 'https://player.vimeo.com/video/1223166918?badge=0&autopause=0&player_id=0&app_id=58479',
+  audioUrl: '/marhoumoun/audio.mp3',
+  images: Array.from({ length: 57 }, (_, i) => `/marhoumoun/${i + 1}.jpeg`),
 }
 
-// Données organisées par catégories
 const projectsData = {
-  photography: [
-    lienSacreProject,
-    marhoumounProject,
-    {
-      title: 'La lumière des années noires',
-      description: `Dans l'Algérie des années 90, la décennie noire...`,
-      images: ['/photos/annees-noires-1.jpg'],
-    },
-    {
-      title: 'Des souvenirs doux',
-      description: 'Exploration visuelle des souvenirs intimes et nostalgiques.',
-      images: ['/photos/souvenirs-1.jpg'],
-    },
-    {
-      title: 'Matbanch 3lik (Ça se voit pas sur toi)',
-      description: 'Série sur les fardeaux invisibles et l’expression du regard.',
-      images: ['/photos/matbanch-1.jpg'],
-    },
-  ],
-  videography: [
-    lienSacreProject,
-    marhoumounProject,
-    {
-      title: 'La lumière des années noires',
-      description: 'Documentaire vidéo explorant les récits intimes.',
-      videoUrl: '/videos/annees-noires.mp4',
-    },
-    {
-      title: 'Acte manqué',
-      description: 'Court-métrage expérimental.',
-      videoUrl: '/videos/acte-manque.mp4',
-    },
-  ],
-  audiography: [
-    marhoumounProject,
-  ],
+  photography: [lienSacreProject, marhoumounProject],
+  videography: [lienSacreProject, marhoumounProject],
+  audiography: [marhoumounProject],
 }
 
 export default function Home() {
   const [selectedProject, setSelectedProject] = useState<any | null>(null)
+  const [darkMode, setDarkMode] = useState(true)
+
+  // Gestion du Zoom / Lightbox
+  const [activeImageIndex, setActiveImageIndex] = useState<number | null>(null)
+
+  // Raccourcis clavier pour naviguer dans la lightbox
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (activeImageIndex === null || !selectedProject?.images) return
+      if (e.key === 'Escape') setActiveImageIndex(null)
+      if (e.key === 'ArrowRight') {
+        setActiveImageIndex((prev) =>
+          prev !== null ? (prev + 1) % selectedProject.images.length : null
+        )
+      }
+      if (e.key === 'ArrowLeft') {
+        setActiveImageIndex((prev) =>
+          prev !== null
+            ? (prev - 1 + selectedProject.images.length) % selectedProject.images.length
+            : null
+        )
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [activeImageIndex, selectedProject])
 
   return (
-    <div className="font-sans bg-[#e2e1dd] text-zinc-900 min-h-screen px-6 md:px-20 py-10 selection:bg-zinc-300">
-      {/* Navigation Minimaliste & Fine */}
-      <header className="mb-20">
-        <nav className="flex justify-center space-x-10 text-[11px] md:text-xs tracking-[0.25em] uppercase font-extralight text-zinc-800">
-          <button 
-            onClick={() => setSelectedProject(null)} 
-            className="hover:text-black transition duration-300"
+    <div
+      className={`min-h-screen transition-colors duration-700 font-sans selection:bg-zinc-500 selection:text-white ${
+        darkMode ? 'bg-zinc-950 text-zinc-100' : 'bg-[#e2e1dd] text-zinc-900'
+      }`}
+    >
+      {/* Bouton Dark / Light Mode */}
+      <div className="fixed top-6 right-6 z-50">
+        <button
+          onClick={() => setDarkMode(!darkMode)}
+          className={`text-[10px] tracking-[0.2em] uppercase px-4 py-2 rounded-full border transition-all duration-300 shadow-sm ${
+            darkMode
+              ? 'border-zinc-800 hover:border-zinc-500 text-zinc-400 hover:text-white bg-zinc-900/80 backdrop-blur-md'
+              : 'border-zinc-300 hover:border-zinc-800 text-zinc-600 hover:text-black bg-[#e2e1dd]/80 backdrop-blur-md'
+          }`}
+        >
+          {darkMode ? '☀️ Light' : '🌙 Dark'}
+        </button>
+      </div>
+
+      <div className="px-6 md:px-20 py-12 max-w-5xl mx-auto">
+        {/* Navigation principale */}
+        <header className="mb-24">
+          <nav className="flex flex-wrap justify-center gap-8 md:gap-14 text-[11px] md:text-xs tracking-[0.3em] uppercase font-extralight">
+            <button
+              onClick={() => setSelectedProject(null)}
+              className="hover:opacity-50 transition-opacity duration-300 relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-current hover:after:w-full after:transition-all after:duration-300"
+            >
+              Biographie
+            </button>
+
+            {/* PHOTOGRAPHY */}
+            <div className="relative group">
+              <span className="cursor-pointer hover:opacity-50 transition-opacity duration-300 py-1 relative block after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-current group-hover:after:w-full after:transition-all after:duration-300">
+                Photography
+              </span>
+              <div className="absolute left-1/2 -translate-x-1/2 top-full opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-300 pt-4 w-64 text-center z-40">
+                <div
+                  className={`p-5 border shadow-2xl space-y-3 backdrop-blur-xl ${
+                    darkMode
+                      ? 'bg-zinc-900/90 border-zinc-800/80'
+                      : 'bg-[#e2e1dd]/90 border-zinc-300/80'
+                  }`}
+                >
+                  {projectsData.photography.map((project) => (
+                    <button
+                      key={project.id}
+                      onClick={() => setSelectedProject(project)}
+                      className="block w-full text-[11px] tracking-wider text-left font-light hover:translate-x-1 transition-transform duration-200 opacity-70 hover:opacity-100"
+                    >
+                      {project.title}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* VIDEOGRAPHY */}
+            <div className="relative group">
+              <span className="cursor-pointer hover:opacity-50 transition-opacity duration-300 py-1 relative block after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-current group-hover:after:w-full after:transition-all after:duration-300">
+                Videography
+              </span>
+              <div className="absolute left-1/2 -translate-x-1/2 top-full opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-300 pt-4 w-64 text-center z-40">
+                <div
+                  className={`p-5 border shadow-2xl space-y-3 backdrop-blur-xl ${
+                    darkMode
+                      ? 'bg-zinc-900/90 border-zinc-800/80'
+                      : 'bg-[#e2e1dd]/90 border-zinc-300/80'
+                  }`}
+                >
+                  {projectsData.videography.map((project) => (
+                    <button
+                      key={project.id}
+                      onClick={() => setSelectedProject(project)}
+                      className="block w-full text-[11px] tracking-wider text-left font-light hover:translate-x-1 transition-transform duration-200 opacity-70 hover:opacity-100"
+                    >
+                      {project.title}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* AUDIOGRAPHY */}
+            <div className="relative group">
+              <span className="cursor-pointer hover:opacity-50 transition-opacity duration-300 py-1 relative block after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-current group-hover:after:w-full after:transition-all after:duration-300">
+                Audiography
+              </span>
+              <div className="absolute left-1/2 -translate-x-1/2 top-full opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-300 pt-4 w-64 text-center z-40">
+                <div
+                  className={`p-5 border shadow-2xl space-y-3 backdrop-blur-xl ${
+                    darkMode
+                      ? 'bg-zinc-900/90 border-zinc-800/80'
+                      : 'bg-[#e2e1dd]/90 border-zinc-300/80'
+                  }`}
+                >
+                  {projectsData.audiography.map((project) => (
+                    <button
+                      key={project.id}
+                      onClick={() => setSelectedProject(project)}
+                      className="block w-full text-[11px] tracking-wider text-left font-light hover:translate-x-1 transition-transform duration-200 opacity-70 hover:opacity-100"
+                    >
+                      {project.title}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <a
+              href="#contact"
+              className="hover:opacity-50 transition-opacity duration-300 relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-current hover:after:w-full after:transition-all after:duration-300"
+            >
+              Contact
+            </a>
+          </nav>
+        </header>
+
+        {/* Contenu de la page */}
+        <main className="max-w-2xl mx-auto space-y-16">
+          {selectedProject ? (
+            <section className="space-y-12 animate-fadeIn">
+              {/* Entête du Projet */}
+              <div className="flex justify-between items-baseline border-b border-zinc-500/20 pb-4">
+                <h1 className="text-2xl md:text-3xl font-extralight tracking-wide">
+                  {selectedProject.title}
+                </h1>
+                <button
+                  onClick={() => setSelectedProject(null)}
+                  className="text-[10px] tracking-[0.25em] uppercase opacity-40 hover:opacity-100 transition-opacity duration-300"
+                >
+                  [fermer]
+                </button>
+              </div>
+
+              {/* Description */}
+              {selectedProject.description && (
+                <div className="text-xs md:text-sm leading-relaxed font-extralight opacity-85 whitespace-pre-line space-y-4">
+                  {selectedProject.description}
+                </div>
+              )}
+
+              {/* Player Audio */}
+              {selectedProject.audioUrl && (
+                <div
+                  className={`p-4 rounded-lg border transition-all duration-300 space-y-2 ${
+                    darkMode
+                      ? 'border-zinc-800 bg-zinc-900/50'
+                      : 'border-zinc-300 bg-zinc-200/40'
+                  }`}
+                >
+                  <p className="text-[10px] uppercase tracking-[0.2em] opacity-60">
+                    🔊 Ambiance Sonore
+                  </p>
+                  <audio controls className="w-full h-8 opacity-80 hover:opacity-100 transition">
+                    <source src={selectedProject.audioUrl} type="audio/mpeg" />
+                  </audio>
+                </div>
+              )}
+
+              {/* Player Vidéo Vimeo Embed */}
+              {selectedProject.vimeoUrl && (
+                <div className="relative pt-[56.25%] w-full rounded-lg overflow-hidden border border-zinc-500/10 shadow-lg bg-black">
+                  <iframe
+                    src={selectedProject.vimeoUrl}
+                    className="absolute top-0 left-0 w-full h-full"
+                    frameBorder="0"
+                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    title={selectedProject.title}
+                  />
+                </div>
+              )}
+
+              {/* Galerie d'images interactive */}
+              {selectedProject.images && selectedProject.images.length > 0 && (
+                <div className="space-y-16 pt-6">
+                  {selectedProject.images.map((imgUrl: string, idx: number) => (
+                    <div
+                      key={idx}
+                      onClick={() => setActiveImageIndex(idx)}
+                      className="group relative cursor-zoom-in overflow-hidden rounded-sm"
+                    >
+                      <img
+                        src={imgUrl}
+                        alt={`${selectedProject.title} - ${idx + 1}`}
+                        className="w-full h-auto object-cover opacity-90 group-hover:opacity-100 group-hover:scale-[1.02] transition-all duration-700 ease-out"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500" />
+                      <span className="absolute bottom-4 right-4 text-[9px] tracking-widest text-white/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/40 px-2 py-1 backdrop-blur-sm rounded">
+                        ZOOM [{idx + 1}/{selectedProject.images.length}]
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </section>
+          ) : (
+            /* Vue Biographie */
+            <section className="space-y-10 animate-fadeIn">
+              <h1 className="text-3xl md:text-4xl font-extralight tracking-tight">
+                Biographie
+              </h1>
+
+              <div className="text-xs md:text-sm leading-relaxed font-extralight opacity-80 space-y-6">
+                <p>
+                  <strong className="font-normal">WAFAA SOLTANE</strong>, née en 1994 à Oran, a étudié la littérature française à l'Université d'Oran avant de se tourner vers la photographie documentaire.
+                </p>
+                <p>
+                  Son parcours artistique s'enrichit d'une formation auprès de la photographe Liasmine Fodil, suivie d'un mentorat approfondi avec Lola Khalfa dans le cadre de la première édition du projet Tilawin (2021-2022).
+                </p>
+                <p>
+                  Au sein de ce programme, Wafaa développe plusieurs projets photographiques qu'elle expose notamment à l'Institut français d'Oran, au Magasin du CNAC de Grenoble et à la Nuit de l'Année des Rencontres d'Arles.
+                </p>
+                <p>
+                  Elle poursuit son chemin en 2023 avec une résidence au MICT de Tunis, où elle mène un projet documentaire sur le tatouage et la femme tunisienne ainsi qu'un autre projet constituant un hommage visuel et intime à la perte, à la mémoire et aux rituels funéraires intitulé « Marhoumoun ».
+                </p>
+              </div>
+            </section>
+          )}
+        </main>
+      </div>
+
+      {/* MODAL LIGHTBOX / ZOOM PLEIN ÉCRAN */}
+      {activeImageIndex !== null && selectedProject?.images && (
+        <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex items-center justify-center p-4 md:p-10 animate-fadeIn">
+          {/* Bouton Fermer */}
+          <button
+            onClick={() => setActiveImageIndex(null)}
+            className="absolute top-6 right-6 text-white/70 hover:text-white text-xs tracking-widest uppercase p-2 z-50 transition"
           >
-            Biographie
+            ✕ Fermer
           </button>
 
-          {/* PHOTOGRAPHY */}
-          <div className="relative group">
-            <span className="cursor-pointer hover:text-black transition duration-300 py-2">
-              Photography
+          {/* Navigation Flèche Gauche */}
+          <button
+            onClick={() =>
+              setActiveImageIndex(
+                (activeImageIndex - 1 + selectedProject.images.length) %
+                  selectedProject.images.length
+              )
+            }
+            className="absolute left-4 md:left-8 text-white/50 hover:text-white text-xl p-4 transition z-50"
+          >
+            ‹
+          </button>
+
+          {/* Image en haute résolution */}
+          <div className="max-w-full max-h-full flex flex-col items-center justify-center space-y-3">
+            <img
+              src={selectedProject.images[activeImageIndex]}
+              alt={`Zoom ${activeImageIndex + 1}`}
+              className="max-h-[85vh] max-w-[90vw] object-contain shadow-2xl rounded-sm transition-all duration-300"
+            />
+            <span className="text-[10px] tracking-[0.3em] text-white/50 uppercase">
+              {activeImageIndex + 1} / {selectedProject.images.length}
             </span>
-            <div className="absolute left-1/2 -translate-x-1/2 top-full hidden group-hover:block pt-3 w-56 text-center z-50">
-              <div className="bg-[#e2e1dd]/90 backdrop-blur-md p-3 border border-zinc-400/20 shadow-sm space-y-2">
-                {projectsData.photography.map((project, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setSelectedProject(project)}
-                    className="block w-full text-[11px] tracking-wide font-extralight text-zinc-700 hover:text-black transition duration-200"
-                  >
-                    {project.title}
-                  </button>
-                ))}
-              </div>
-            </div>
           </div>
 
-          {/* VIDEOGRAPHY */}
-          <div className="relative group">
-            <span className="cursor-pointer hover:text-black transition duration-300 py-2">
-              Videography
-            </span>
-            <div className="absolute left-1/2 -translate-x-1/2 top-full hidden group-hover:block pt-3 w-56 text-center z-50">
-              <div className="bg-[#e2e1dd]/90 backdrop-blur-md p-3 border border-zinc-400/20 shadow-sm space-y-2">
-                {projectsData.videography.map((project, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setSelectedProject(project)}
-                    className="block w-full text-[11px] tracking-wide font-extralight text-zinc-700 hover:text-black transition duration-200"
-                  >
-                    {project.title}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* AUDIOGRAPHY */}
-          <div className="relative group">
-            <span className="cursor-pointer hover:text-black transition duration-300 py-2">
-              Audiography
-            </span>
-            <div className="absolute left-1/2 -translate-x-1/2 top-full hidden group-hover:block pt-3 w-56 text-center z-50">
-              <div className="bg-[#e2e1dd]/90 backdrop-blur-md p-3 border border-zinc-400/20 shadow-sm space-y-2">
-                {projectsData.audiography.map((project, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setSelectedProject(project)}
-                    className="block w-full text-[11px] tracking-wide font-extralight text-zinc-700 hover:text-black transition duration-200"
-                  >
-                    {project.title}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <a href="#contact" className="hover:text-black transition duration-300">
-            Contact
-          </a>
-        </nav>
-      </header>
-
-      {/* Contenu Principal */}
-      <main className="max-w-2xl mx-auto space-y-20">
-        {selectedProject ? (
-          /* VUE PROJET SÉLECTIONNÉ */
-          <section className="space-y-10 animate-fadeIn">
-            <div className="flex justify-between items-baseline border-b border-zinc-400/20 pb-4">
-              <h1 className="text-2xl md:text-4xl font-extralight tracking-wide text-zinc-900 lowercase">
-                {selectedProject.title}
-              </h1>
-              <button
-                onClick={() => setSelectedProject(null)}
-                className="text-[10px] tracking-[0.2em] uppercase text-zinc-500 hover:text-black transition"
-              >
-                [fermer]
-              </button>
-            </div>
-
-            {selectedProject.description && (
-              <div className="text-xs md:text-sm leading-relaxed font-extralight text-zinc-700 whitespace-pre-line max-w-lg ml-auto">
-                {selectedProject.description}
-              </div>
-            )}
-
-            {selectedProject.videoUrl && (
-              <div className="aspect-video w-full my-8 bg-black/5">
-                <video controls className="w-full h-full object-cover">
-                  <source src={encodeURI(selectedProject.videoUrl)} />
-                </video>
-              </div>
-            )}
-
-            {selectedProject.images && selectedProject.images.length > 0 && (
-              <div className="space-y-12 pt-4">
-                {selectedProject.images.map((imgUrl: string, idx: number) => (
-                  <div key={idx} className="w-full">
-                    <img
-                      src={encodeURI(imgUrl)}
-                      alt={`${selectedProject.title} - photo ${idx + 1}`}
-                      className="w-full h-auto object-cover opacity-95"
-                      loading="lazy"
-                    />
-                  </div>
-                ))}
-              </div>
-            )}
-          </section>
-        ) : (
-          /* VUE BIOGRAPHIE PAR DÉFAUT */
-          <section className="space-y-10">
-            <h1 className="text-3xl md:text-4xl font-extralight tracking-tight text-zinc-900">
-              Biographie
-            </h1>
-
-            <div className="text-xs md:text-sm leading-relaxed font-extralight text-zinc-700 space-y-5 max-w-lg ml-auto">
-              <p>
-                <strong className="font-light text-zinc-900">WAFAA SOLTANE</strong>, née en 1994 à Oran, a étudié la littérature française à l'Université d'Oran avant de se tourner vers la photographie documentaire.
-              </p>
-              <p>
-                Son parcours artistique s'enrichit d'une formation auprès de la photographe Liasmine Fodil, suivie d'un mentorat approfondi avec Lola Khalfa dans le cadre de la première édition du projet Tilawin (2021-2022).
-              </p>
-              <p>
-                Au sein de ce programme, Wafaa développe plusieurs projets photographiques qu'elle expose notamment à l'Institut français d'Oran, au Magasin du CNAC de Grenoble et à la Nuit de l'Année des Rencontres d'Arles.
-              </p>
-              <p>
-                Elle poursuit son chemin en 2023 avec une résidence au MICT de Tunis, où elle mène un projet documentaire sur le tatouage et la femme tunisienne ainsi qu'un autre projet constituant un hommage visuel et intime à la perte, à la mémoire et aux rituels funéraires intitulé « Marhoumoun ».
-              </p>
-            </div>
-          </section>
-        )}
-      </main>
+          {/* Navigation Flèche Droite */}
+          <button
+            onClick={() =>
+              setActiveImageIndex(
+                (activeImageIndex + 1) % selectedProject.images.length
+              )
+            }
+            className="absolute right-4 md:right-8 text-white/50 hover:text-white text-xl p-4 transition z-50"
+          >
+            ›
+          </button>
+        </div>
+      )}
     </div>
   )
 }
