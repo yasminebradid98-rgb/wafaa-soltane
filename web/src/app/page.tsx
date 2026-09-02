@@ -7,15 +7,35 @@ import Image from 'next/image'
 const lienSacreProject = {
   id: 'lien-sacre',
   title: 'Lien sacré',
-  description: `Une immersion au cœur des mariages en Algérie, mettant en lumière le rôle central et la transmission des traditions par les femmes.`,
+  description: `Je vous invite à plonger dans une autre dimension, celle de nos mariages en Algérie, où chaque instant est une véritable symphonie d'émotions, de traditions et de couleurs. Ici, la présence des femmes s’impose naturellement, du début à la fin des festivités.
+Dès les premiers préparatifs, ce sont elles qui dirigent. Mères, tantes, sœurs et amies se réunissent pour veiller à chaque détail avec une minutie sans faille. Qu’il s’agisse du choix des tenues, des bijoux ou des plats à servir, tout passe entre leurs mains habiles. Leur savoir-faire et leur engagement transforment cette période en un moment de solidarité intense. Derrière chaque geste se cache la détermination de rendre ce mariage exceptionnel.
+La mariée est au cœur de toutes les attentions, entourée de celles qui lui prodiguent conseils et soutien dans cette étape importante de sa vie. Quand elle quitte la maison familiale, l'émotion est palpable, marquée par des larmes et des sourires mêlés. Ce moment, empreint de traditions, est aussi une démonstration de l'unité et de l’affection qui lient les femmes autour de cet événement. Ce passage n’est pas seulement un adieu, c’est une étape de transmission où elles l’accompagnent vers un nouveau chapitre.
+Tout au long des festivités, l’enthousiasme des femmes anime la célébration. Elles chantent, dansent, et célèbrent l’union avec une joie et une vitalité qui insufflent une énergie unique. Leur présence, bien plus qu’un simple ornement, est l’essence de ces rassemblements. Elles incarnent la continuité des traditions tout en apportant un vent de modernité et d’innovation. Les mariages algériens sont ainsi le reflet de cet équilibre délicat entre respect des coutumes et adaptation à une époque nouvelle.
+Même face aux défis et tensions qui peuvent surgir durant les préparatifs, ce sont souvent elles qui trouvent les mots pour apaiser les esprits et faire de chaque obstacle une opportunité de renforcer les liens. Leur rôle ne se limite pas à la coordination ; elles apportent une sagesse et une sérénité indispensables.
+Le mariage algérien, dans son essence, repose en grande partie sur leur engagement et leur soutien. Elles sont les gardiennes des traditions, les architectes de cette célébration, assurant que l’union des deux êtres soit magnifiée à chaque étape. Peu importe le nombre d’invités ou les imprévus, leur contribution fait de chaque mariage un moment unique et inoubliable.
+Je vous invite donc à découvrir l’univers de nos mariages algériens, où l’amour et la complicité féminine se tissent pour créer des souvenirs précieux. Venez vivre ces instants de bonheur où se mêlent tradition, émotion et modernité, portés par la grâce et l’engagement des femmes.
+
+
+`,
   images: Array.from({ length: 21 }, (_, i) => `/liensacre/${i + 1}.jpg`),
 }
 
 const marhoumounProject = {
   id: 'marhoumoun',
   title: 'مرحومون / Marhoumoun',
-  description: `La mort n’a pas de sens. Dans ce projet, je retrace les trois jours qui suivent un décès en Oranie. Les membres de la famille mettent leur chagrin de côté pour accueillir, nourrir, prendre soin des invités.`,
-  vimeoUrl: 'https://player.vimeo.com/video/1223166918?badge=0&autopause=0&player_id=0&app_id=58479', 
+  description: `
+La mort n’a pas de sens.
+
+Quand le téléphone sonne et qu'on entend « Allah akbar » ou un hurlement, une larme silencieuse qui tombe et un « Inna lillah wa inna ilayhi raji'oun », cet appel n'est que le premier pour annoncer un décès. Il faut ensuite l’annoncer au reste de la maison en restant courageux et fort, puisque ce n’est pas le moment de craquer.
+Je me rappelle du décès de mon grand-père. Je n'étais qu'une petite fille, je ne sais pas qui avait appelé. Je suis descendue par les escaliers, j'ai ouvert la porte et là, je vois notre voisine qui m’a retenue et qui disait ne pas s'attendre à ce qu'une gamine puisse avoir autant de force. C’était le premier décès d’un proche que j’ai vécu.
+Avec le temps, on comprend que c’est juste une autre étape de la vie, qu'on va tous y passer un jour et être dans les deux camps : el motaazi et el moaazi. Et puis un jour, on sera el marhoum / el marhouma.
+La mort ne frappe jamais à la porte pour nous prévenir. Dans ce projet, je retrace les trois jours qui suivent un décès en Oranie. Les membres de la famille mettent leur chagrin de côté pour accueillir, nourrir, prendre soin des invités. À chaque enterrement, le même scénario se répète. Et à chaque fois, je me surprends à espérer qu’un jour, nous pourrons pleurer. Pleurer librement.
+Ici, les vivants prennent le dessus, masquant la douleur derrière les gestes, les plats servis, les formules échangées. Le mort, lui, est en paix. Ce qui reste à porter, c’est la charge des vivants.
+Le son que vous entendez est composé d’enregistrements réalisés durant les funérailles.
+« On meurt tous plusieurs fois dans une vie. »
+
+`,
+  vimeoUrl: 'https://player.vimeo.com/video/1223166918?badge=0&autopause=0&player_id=0&app_id=58479&title=0&byline=0&portrait=0', 
   audioUrl: '/marhoumoun/audio.mp3',
   images: Array.from({ length: 57 }, (_, i) => `/marhoumoun/${i + 1}.jpeg`),
 }
