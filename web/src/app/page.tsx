@@ -56,10 +56,22 @@ export default function Home() {
   const [selectedProject, setSelectedProject] = useState<any | null>(null)
   const [darkMode, setDarkMode] = useState(true)
 
+  // Gestion du menu actif pour clics/taps
+  const [activeMenu, setActiveMenu] = useState<string | null>(null)
+
   // Gestion du Zoom / Lightbox
   const [activeImageIndex, setActiveImageIndex] = useState<number | null>(null)
 
-  // Raccourcis clavier pour naviguer dans la lightbox
+  const toggleMenu = (menuName: string) => {
+    setActiveMenu(activeMenu === menuName ? null : menuName)
+  }
+
+  const handleSelectProject = (project: any) => {
+    setSelectedProject(project)
+    setActiveMenu(null)
+  }
+
+  // Raccourcis clavier pour la lightbox
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (activeImageIndex === null || !selectedProject?.images) return
@@ -103,32 +115,44 @@ export default function Home() {
 
       <div className="px-6 md:px-20 py-12 max-w-5xl mx-auto">
         {/* Navigation principale */}
-        <header className="mb-24">
+        <header className="mb-24 relative z-30">
           <nav className="flex flex-wrap justify-center gap-8 md:gap-14 text-[11px] md:text-xs tracking-[0.3em] uppercase font-extralight">
             <button
-              onClick={() => setSelectedProject(null)}
+              onClick={() => {
+                setSelectedProject(null)
+                setActiveMenu(null)
+              }}
               className="hover:opacity-50 transition-opacity duration-300 relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-current hover:after:w-full after:transition-all after:duration-300"
             >
               Biographie
             </button>
 
             {/* PHOTOGRAPHY */}
-            <div className="relative group">
-              <span className="cursor-pointer hover:opacity-50 transition-opacity duration-300 py-1 relative block after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-current group-hover:after:w-full after:transition-all after:duration-300">
-                Photography
-              </span>
-              <div className="absolute left-1/2 -translate-x-1/2 top-full opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-300 pt-4 w-64 text-center z-40">
+            <div className="relative group py-1">
+              <button
+                onClick={() => toggleMenu('photography')}
+                className="cursor-pointer hover:opacity-50 transition-opacity duration-300 relative block uppercase tracking-[0.3em] after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-current group-hover:after:w-full after:transition-all after:duration-300"
+              >
+                Photography {activeMenu === 'photography' ? '▴' : '▾'}
+              </button>
+              <div
+                className={`absolute left-1/2 -translate-x-1/2 top-full pt-2 w-64 text-center z-50 transition-all duration-200 ${
+                  activeMenu === 'photography'
+                    ? 'block opacity-100 pointer-events-auto'
+                    : 'hidden group-hover:block opacity-100'
+                }`}
+              >
                 <div
-                  className={`p-5 border shadow-2xl space-y-3 backdrop-blur-xl ${
+                  className={`p-5 border shadow-2xl space-y-3 backdrop-blur-xl rounded-sm ${
                     darkMode
-                      ? 'bg-zinc-900/90 border-zinc-800/80'
-                      : 'bg-[#e2e1dd]/90 border-zinc-300/80'
+                      ? 'bg-zinc-900/95 border-zinc-800'
+                      : 'bg-[#e2e1dd]/95 border-zinc-300'
                   }`}
                 >
                   {projectsData.photography.map((project) => (
                     <button
                       key={project.id}
-                      onClick={() => setSelectedProject(project)}
+                      onClick={() => handleSelectProject(project)}
                       className="block w-full text-[11px] tracking-wider text-left font-light hover:translate-x-1 transition-transform duration-200 opacity-70 hover:opacity-100"
                     >
                       {project.title}
@@ -139,22 +163,31 @@ export default function Home() {
             </div>
 
             {/* VIDEOGRAPHY */}
-            <div className="relative group">
-              <span className="cursor-pointer hover:opacity-50 transition-opacity duration-300 py-1 relative block after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-current group-hover:after:w-full after:transition-all after:duration-300">
-                Videography
-              </span>
-              <div className="absolute left-1/2 -translate-x-1/2 top-full opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-300 pt-4 w-64 text-center z-40">
+            <div className="relative group py-1">
+              <button
+                onClick={() => toggleMenu('videography')}
+                className="cursor-pointer hover:opacity-50 transition-opacity duration-300 relative block uppercase tracking-[0.3em] after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-current group-hover:after:w-full after:transition-all after:duration-300"
+              >
+                Videography {activeMenu === 'videography' ? '▴' : '▾'}
+              </button>
+              <div
+                className={`absolute left-1/2 -translate-x-1/2 top-full pt-2 w-64 text-center z-50 transition-all duration-200 ${
+                  activeMenu === 'videography'
+                    ? 'block opacity-100 pointer-events-auto'
+                    : 'hidden group-hover:block opacity-100'
+                }`}
+              >
                 <div
-                  className={`p-5 border shadow-2xl space-y-3 backdrop-blur-xl ${
+                  className={`p-5 border shadow-2xl space-y-3 backdrop-blur-xl rounded-sm ${
                     darkMode
-                      ? 'bg-zinc-900/90 border-zinc-800/80'
-                      : 'bg-[#e2e1dd]/90 border-zinc-300/80'
+                      ? 'bg-zinc-900/95 border-zinc-800'
+                      : 'bg-[#e2e1dd]/95 border-zinc-300'
                   }`}
                 >
                   {projectsData.videography.map((project) => (
                     <button
                       key={project.id}
-                      onClick={() => setSelectedProject(project)}
+                      onClick={() => handleSelectProject(project)}
                       className="block w-full text-[11px] tracking-wider text-left font-light hover:translate-x-1 transition-transform duration-200 opacity-70 hover:opacity-100"
                     >
                       {project.title}
@@ -165,22 +198,31 @@ export default function Home() {
             </div>
 
             {/* AUDIOGRAPHY */}
-            <div className="relative group">
-              <span className="cursor-pointer hover:opacity-50 transition-opacity duration-300 py-1 relative block after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-current group-hover:after:w-full after:transition-all after:duration-300">
-                Audiography
-              </span>
-              <div className="absolute left-1/2 -translate-x-1/2 top-full opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-300 pt-4 w-64 text-center z-40">
+            <div className="relative group py-1">
+              <button
+                onClick={() => toggleMenu('audiography')}
+                className="cursor-pointer hover:opacity-50 transition-opacity duration-300 relative block uppercase tracking-[0.3em] after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-current group-hover:after:w-full after:transition-all after:duration-300"
+              >
+                Audiography {activeMenu === 'audiography' ? '▴' : '▾'}
+              </button>
+              <div
+                className={`absolute left-1/2 -translate-x-1/2 top-full pt-2 w-64 text-center z-50 transition-all duration-200 ${
+                  activeMenu === 'audiography'
+                    ? 'block opacity-100 pointer-events-auto'
+                    : 'hidden group-hover:block opacity-100'
+                }`}
+              >
                 <div
-                  className={`p-5 border shadow-2xl space-y-3 backdrop-blur-xl ${
+                  className={`p-5 border shadow-2xl space-y-3 backdrop-blur-xl rounded-sm ${
                     darkMode
-                      ? 'bg-zinc-900/90 border-zinc-800/80'
-                      : 'bg-[#e2e1dd]/90 border-zinc-300/80'
+                      ? 'bg-zinc-900/95 border-zinc-800'
+                      : 'bg-[#e2e1dd]/95 border-zinc-300'
                   }`}
                 >
                   {projectsData.audiography.map((project) => (
                     <button
                       key={project.id}
-                      onClick={() => setSelectedProject(project)}
+                      onClick={() => handleSelectProject(project)}
                       className="block w-full text-[11px] tracking-wider text-left font-light hover:translate-x-1 transition-transform duration-200 opacity-70 hover:opacity-100"
                     >
                       {project.title}
@@ -192,6 +234,7 @@ export default function Home() {
 
             <a
               href="#contact"
+              onClick={() => setActiveMenu(null)}
               className="hover:opacity-50 transition-opacity duration-300 relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-current hover:after:w-full after:transition-all after:duration-300"
             >
               Contact
@@ -200,7 +243,10 @@ export default function Home() {
         </header>
 
         {/* Contenu de la page */}
-        <main className="max-w-2xl mx-auto space-y-16">
+        <main
+          className="max-w-2xl mx-auto space-y-16 relative z-10"
+          onClick={() => setActiveMenu(null)}
+        >
           {selectedProject ? (
             <section className="space-y-12 animate-fadeIn">
               {/* Entête du Projet */}
