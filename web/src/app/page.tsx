@@ -1,7 +1,9 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 
+// Project Data
 const lienSacreProject = {
   id: 'lien-sacre',
   title: 'Lien sacré',
@@ -12,15 +14,15 @@ const lienSacreProject = {
 const marhoumounProject = {
   id: 'marhoumoun',
   title: 'مرحومون / Marhoumoun',
-  description: `La mort n’a pas de sens. Dans ce projet, je retrace les trois jours qui suivent un décès en Oranie. Les membres de la famille mettent leur chagrin de côté pour accueillir, nourrir, prendre soin des invités. Ici, les vivants prennent le dessus, masquant la douleur derrière les gestes et les rituels.`,
+  description: `La mort n’a pas de sens. Dans ce projet, je retrace les trois jours qui suivent un décès en Oranie. Les membres de la famille mettent leur chagrin de côté pour accueillir, nourrir, prendre soin des invités.`,
   videoUrl: '/marhoumoun/video.mp4', 
   audioUrl: '/marhoumoun/audio.mp3',
   images: Array.from({ length: 57 }, (_, i) => `/marhoumoun/${i + 1}.jpeg`),
 }
 
-const projectsData = {
-  photography: [lienSacreProject, marhoumounProject],
-  videography: [lienSacreProject, marhoumounProject],
+const projectsData: Record<string, typeof lienSacreProject[]> = {
+  photography: [marhoumounProject, lienSacreProject],
+  videography: [marhoumounProject, lienSacreProject],
   audiography: [marhoumounProject],
 }
 
@@ -29,7 +31,6 @@ export default function Home() {
   const [darkMode, setDarkMode] = useState(true)
   const [activeMenu, setActiveMenu] = useState<string | null>(null)
 
-  // Index de l'image sélectionnée dans le carrousel
   const [carouselIndex, setCarouselIndex] = useState(0)
   const [activeImageIndex, setActiveImageIndex] = useState<number | null>(null)
 
@@ -59,11 +60,11 @@ export default function Home() {
 
   return (
     <div
-      className={`min-h-screen transition-colors duration-700 font-sans ${
+      className={`min-h-screen transition-colors duration-500 font-sans ${
         darkMode ? 'bg-zinc-950 text-zinc-100' : 'bg-[#e2e1dd] text-zinc-900'
       }`}
     >
-      {/* Bouton Dark / Light */}
+      {/* Theme Toggle */}
       <div className="fixed top-6 right-6 z-50">
         <button
           onClick={() => setDarkMode(!darkMode)}
@@ -78,7 +79,7 @@ export default function Home() {
       </div>
 
       <div className="px-6 md:px-16 py-8 max-w-4xl mx-auto">
-        {/* Navigation principale */}
+        {/* Navigation */}
         <header className="mb-10 relative z-30">
           <nav className="flex flex-wrap justify-center gap-6 text-[11px] uppercase tracking-[0.3em] font-extralight">
             <button
@@ -88,7 +89,7 @@ export default function Home() {
               }}
               className="hover:opacity-50 transition"
             >
-              Biographie
+              About Me
             </button>
 
             {['photography', 'videography', 'audiography'].map((category) => (
@@ -109,7 +110,7 @@ export default function Home() {
                       darkMode ? 'bg-zinc-900/95 border-zinc-800' : 'bg-[#e2e1dd]/95 border-zinc-300'
                     }`}
                   >
-                    {projectsData[category as keyof typeof projectsData].map((project) => (
+                    {projectsData[category]?.map((project) => (
                       <button
                         key={project.id}
                         onClick={() => handleSelectProject(project)}
@@ -128,25 +129,23 @@ export default function Home() {
         <main className="max-w-2xl mx-auto space-y-8 relative z-10">
           {selectedProject ? (
             <section className="space-y-6 animate-fadeIn">
-              {/* Entête du Projet */}
               <div className="flex justify-between items-baseline border-b border-zinc-500/20 pb-3">
                 <h1 className="text-xl font-extralight tracking-wide">{selectedProject.title}</h1>
                 <button
                   onClick={() => setSelectedProject(null)}
                   className="text-[10px] tracking-widest uppercase opacity-40 hover:opacity-100"
                 >
-                  [fermer]
+                  [Clear Selection]
                 </button>
               </div>
 
-              {/* Description courte */}
               {selectedProject.description && (
                 <p className="text-xs md:text-sm leading-relaxed font-extralight opacity-85 whitespace-pre-line">
                   {selectedProject.description}
                 </p>
               )}
 
-              {/* Player Audio */}
+              {/* Audio Player */}
               {selectedProject.audioUrl && (
                 <div
                   className={`p-3 rounded-lg border space-y-1 ${
@@ -162,7 +161,7 @@ export default function Home() {
                 </div>
               )}
 
-              {/* Player Vidéo */}
+              {/* Optimized HTML5 Video */}
               {selectedProject.videoUrl && (
                 <div className="w-full rounded-lg overflow-hidden border border-zinc-500/10 shadow-lg bg-black">
                   <video
@@ -175,37 +174,40 @@ export default function Home() {
                 </div>
               )}
 
-              {/* CARROUSEL COMPACT AVEC MINIATURES */}
+              {/* Fast Carousel */}
               {selectedProject.images && selectedProject.images.length > 0 && (
                 <div className="space-y-3 pt-2">
-                  <div className="relative group overflow-hidden rounded-sm bg-black/10 h-[400px] flex items-center justify-center">
-                    <img
+                  <div className="relative group overflow-hidden rounded-sm bg-black/20 h-[450px] w-full flex items-center justify-center">
+                    <Image
                       src={selectedProject.images[carouselIndex]}
                       alt={`${selectedProject.title} - ${carouselIndex + 1}`}
-                      className="max-h-full max-w-full object-contain cursor-zoom-in transition-all duration-300"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 672px"
+                      quality={60}
+                      priority
+                      className="object-contain cursor-pointer"
                       onClick={() => setActiveImageIndex(carouselIndex)}
                     />
 
-                    {/* Flèches de navigation */}
                     <button
                       onClick={prevSlide}
-                      className="absolute left-3 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/90 text-white w-8 h-8 rounded-full text-sm flex items-center justify-center transition"
+                      className="absolute left-3 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/90 text-white w-8 h-8 rounded-full text-sm flex items-center justify-center transition z-10"
                     >
                       ‹
                     </button>
                     <button
                       onClick={nextSlide}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/90 text-white w-8 h-8 rounded-full text-sm flex items-center justify-center transition"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/90 text-white w-8 h-8 rounded-full text-sm flex items-center justify-center transition z-10"
                     >
                       ›
                     </button>
 
-                    <span className="absolute bottom-3 right-3 text-[9px] tracking-widest text-white/80 bg-black/60 px-2 py-1 backdrop-blur-sm rounded">
+                    <span className="absolute bottom-3 right-3 text-[9px] tracking-widest text-white/80 bg-black/60 px-2 py-1 backdrop-blur-sm rounded z-10">
                       {carouselIndex + 1} / {selectedProject.images.length}
                     </span>
                   </div>
 
-                  {/* Bande de miniatures pour accès rapide */}
+                  {/* Thumbnail Navigation */}
                   <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-thin">
                     {selectedProject.images.map((img: string, idx: number) => (
                       <button
@@ -217,7 +219,14 @@ export default function Home() {
                             : 'border-transparent opacity-40 hover:opacity-80'
                         }`}
                       >
-                        <img src={img} alt="" className="w-full h-full object-cover" />
+                        <Image
+                          src={img}
+                          alt=""
+                          fill
+                          sizes="48px"
+                          quality={30}
+                          className="object-cover"
+                        />
                       </button>
                     ))}
                   </div>
@@ -225,36 +234,34 @@ export default function Home() {
               )}
             </section>
           ) : (
-            /* Vue Biographie */
             <section className="space-y-6">
               <h1 className="text-2xl font-extralight">Biographie</h1>
-              <div className="text-xs md:text-sm leading-relaxed font-extralight opacity-80 space-y-4">
-                <p>
-                  <strong className="font-normal">WAFAA SOLTANE</strong>, née en 1994 à Oran, a étudié la littérature française à l'Université d'Oran avant de se tourner vers la photographie documentaire.
-                </p>
-                <p>
-                  Son parcours artistique s'enrichit d'une formation auprès de la photographe Liasmine Fodil, suivie d'un mentorat approfondi avec Lola Khalfa dans le cadre de la première édition du projet Tilawin (2021-2022).
-                </p>
-              </div>
+              <p className="text-xs md:text-sm leading-relaxed opacity-80 font-extralight">
+                WAFAA SOLTANE, née en 1994 à Oran, a étudié la littérature française à l'Université d'Oran avant de se tourner vers la photographie documentaire...
+              </p>
             </section>
           )}
         </main>
       </div>
 
-      {/* Lightbox / Zoom Plein Écran */}
+      {/* Lightbox Zoom */}
       {activeImageIndex !== null && selectedProject?.images && (
         <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex items-center justify-center p-4">
           <button
             onClick={() => setActiveImageIndex(null)}
             className="absolute top-6 right-6 text-white text-xs tracking-widest uppercase p-2"
           >
-            ✕ Fermer
+            ✕ Close
           </button>
-          <img
-            src={selectedProject.images[activeImageIndex]}
-            alt="Zoom"
-            className="max-h-[85vh] max-w-[90vw] object-contain"
-          />
+          <div className="relative w-full h-[85vh]">
+            <Image
+              src={selectedProject.images[activeImageIndex]}
+              alt="Zoom"
+              fill
+              quality={85}
+              className="object-contain"
+            />
+          </div>
         </div>
       )}
     </div>
