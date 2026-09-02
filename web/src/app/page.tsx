@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
 
 // Project Data
@@ -15,7 +15,7 @@ const marhoumounProject = {
   id: 'marhoumoun',
   title: 'مرحومون / Marhoumoun',
   description: `La mort n’a pas de sens. Dans ce projet, je retrace les trois jours qui suivent un décès en Oranie. Les membres de la famille mettent leur chagrin de côté pour accueillir, nourrir, prendre soin des invités.`,
-  videoUrl: '/marhoumoun/video.mp4', 
+  vimeoUrl: 'https://player.vimeo.com/video/1223166918?badge=0&autopause=0&player_id=0&app_id=58479', 
   audioUrl: '/marhoumoun/audio.mp3',
   images: Array.from({ length: 57 }, (_, i) => `/marhoumoun/${i + 1}.jpeg`),
 }
@@ -28,6 +28,7 @@ const projectsData: Record<string, typeof lienSacreProject[]> = {
 
 export default function Home() {
   const [selectedProject, setSelectedProject] = useState<any | null>(null)
+  const [showContact, setShowContact] = useState(false)
   const [darkMode, setDarkMode] = useState(true)
   const [activeMenu, setActiveMenu] = useState<string | null>(null)
 
@@ -40,6 +41,7 @@ export default function Home() {
 
   const handleSelectProject = (project: any) => {
     setSelectedProject(project)
+    setShowContact(false)
     setCarouselIndex(0)
     setActiveMenu(null)
   }
@@ -85,11 +87,12 @@ export default function Home() {
             <button
               onClick={() => {
                 setSelectedProject(null)
+                setShowContact(false)
                 setActiveMenu(null)
               }}
               className="hover:opacity-50 transition"
             >
-              About Me
+              Biographie
             </button>
 
             {['photography', 'videography', 'audiography'].map((category) => (
@@ -123,11 +126,113 @@ export default function Home() {
                 </div>
               </div>
             ))}
+
+            <button
+              onClick={() => {
+                setSelectedProject(null)
+                setShowContact(true)
+                setActiveMenu(null)
+              }}
+              className="hover:opacity-50 transition"
+            >
+              Contact
+            </button>
           </nav>
         </header>
 
         <main className="max-w-2xl mx-auto space-y-8 relative z-10">
-          {selectedProject ? (
+          {/* VUE CONTACT */}
+          {showContact ? (
+            <section className="space-y-6 animate-fadeIn">
+              <h1 className="text-xl font-extralight tracking-wide border-b border-zinc-500/20 pb-3">
+                Contact
+              </h1>
+
+              <div className="space-y-4 text-xs md:text-sm font-extralight opacity-80">
+                <p>
+                  Pour toute demande de collaboration, d'exposition ou d'information :
+                </p>
+
+                <div className="space-y-2 pt-2">
+                  <p>
+                    <strong className="font-normal uppercase tracking-wider text-[11px] block text-zinc-400">Email</strong>
+                    <a
+                      href="mailto:contact@wafaasoltane.com"
+                      className="underline underline-offset-4 hover:opacity-70 transition"
+                    >
+                      contact@wafaasoltane.com
+                    </a>
+                  </p>
+
+                  <p className="pt-2">
+                    <strong className="font-normal uppercase tracking-wider text-[11px] block text-zinc-400">Instagram</strong>
+                    <a
+                      href="https://instagram.com/wafaasoltane"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline underline-offset-4 hover:opacity-70 transition"
+                    >
+                      @wafaasoltane
+                    </a>
+                  </p>
+                </div>
+
+                <form
+                  action="https://formspree.io/f/VOTRE_ID_FORMSPREE"
+                  method="POST"
+                  className="space-y-4 pt-6"
+                >
+                  <div>
+                    <label className="block text-[10px] uppercase tracking-widest mb-1 opacity-60">Nom</label>
+                    <input
+                      type="text"
+                      name="name"
+                      required
+                      className={`w-full p-2.5 text-xs rounded border bg-transparent focus:outline-none transition ${
+                        darkMode ? 'border-zinc-800 focus:border-zinc-500' : 'border-zinc-300 focus:border-zinc-600'
+                      }`}
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] uppercase tracking-widest mb-1 opacity-60">Email</label>
+                    <input
+                      type="email"
+                      name="email"
+                      required
+                      className={`w-full p-2.5 text-xs rounded border bg-transparent focus:outline-none transition ${
+                        darkMode ? 'border-zinc-800 focus:border-zinc-500' : 'border-zinc-300 focus:border-zinc-600'
+                      }`}
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] uppercase tracking-widest mb-1 opacity-60">Message</label>
+                    <textarea
+                      name="message"
+                      rows={4}
+                      required
+                      className={`w-full p-2.5 text-xs rounded border bg-transparent focus:outline-none transition ${
+                        darkMode ? 'border-zinc-800 focus:border-zinc-500' : 'border-zinc-300 focus:border-zinc-600'
+                      }`}
+                    ></textarea>
+                  </div>
+
+                  <button
+                    type="submit"
+                    className={`text-[10px] tracking-[0.2em] uppercase px-6 py-2.5 rounded border transition-all ${
+                      darkMode
+                        ? 'border-zinc-700 hover:bg-zinc-100 hover:text-zinc-900'
+                        : 'border-zinc-400 hover:bg-zinc-900 hover:text-zinc-100'
+                    }`}
+                  >
+                    Envoyer
+                  </button>
+                </form>
+              </div>
+            </section>
+          ) : selectedProject ? (
+            /* VUE PROJET */
             <section className="space-y-6 animate-fadeIn">
               <div className="flex justify-between items-baseline border-b border-zinc-500/20 pb-3">
                 <h1 className="text-xl font-extralight tracking-wide">{selectedProject.title}</h1>
@@ -135,7 +240,7 @@ export default function Home() {
                   onClick={() => setSelectedProject(null)}
                   className="text-[10px] tracking-widest uppercase opacity-40 hover:opacity-100"
                 >
-                  [Clear Selection]
+                  [Fermer]
                 </button>
               </div>
 
@@ -145,7 +250,7 @@ export default function Home() {
                 </p>
               )}
 
-              {/* Audio Player */}
+              {/* Player Audio */}
               {selectedProject.audioUrl && (
                 <div
                   className={`p-3 rounded-lg border space-y-1 ${
@@ -161,20 +266,29 @@ export default function Home() {
                 </div>
               )}
 
-              {/* Optimized HTML5 Video */}
-              {selectedProject.videoUrl && (
+              {/* Player Vidéo Vimeo */}
+              {selectedProject.vimeoUrl && (
                 <div className="w-full rounded-lg overflow-hidden border border-zinc-500/10 shadow-lg bg-black">
-                  <video
-                    controls
-                    preload="metadata"
-                    className="w-full h-auto max-h-[350px]"
-                  >
-                    <source src={selectedProject.videoUrl} type="video/mp4" />
-                  </video>
+                  <div style={{ padding: '56.25% 0 0 0', position: 'relative' }}>
+                    <iframe
+                      src={selectedProject.vimeoUrl}
+                      frameBorder="0"
+                      allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                      }}
+                      title={selectedProject.title}
+                    />
+                  </div>
                 </div>
               )}
 
-              {/* Fast Carousel */}
+              {/* Carousel Optimsé */}
               {selectedProject.images && selectedProject.images.length > 0 && (
                 <div className="space-y-3 pt-2">
                   <div className="relative group overflow-hidden rounded-sm bg-black/20 h-[450px] w-full flex items-center justify-center">
@@ -207,7 +321,7 @@ export default function Home() {
                     </span>
                   </div>
 
-                  {/* Thumbnail Navigation */}
+                  {/* Navigation Miniatures */}
                   <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-thin">
                     {selectedProject.images.map((img: string, idx: number) => (
                       <button
@@ -234,11 +348,17 @@ export default function Home() {
               )}
             </section>
           ) : (
+            /* VUE BIOGRAPHIE */
             <section className="space-y-6">
               <h1 className="text-2xl font-extralight">Biographie</h1>
-              <p className="text-xs md:text-sm leading-relaxed opacity-80 font-extralight">
-                WAFAA SOLTANE, née en 1994 à Oran, a étudié la littérature française à l'Université d'Oran avant de se tourner vers la photographie documentaire...
-              </p>
+              <div className="text-xs md:text-sm leading-relaxed opacity-80 font-extralight space-y-4">
+                <p>
+                  <strong className="font-normal">WAFAA SOLTANE</strong>, née en 1994 à Oran, a étudié la littérature française à l'Université d'Oran avant de se tourner vers la photographie documentaire.
+                </p>
+                <p>
+                  Son parcours artistique s'enrichit d'une formation auprès de la photographe Liasmine Fodil, suivie d'un mentorat approfondi avec Lola Khalfa dans le cadre de la première édition du projet Tilawin (2021-2022).
+                </p>
+              </div>
             </section>
           )}
         </main>
@@ -251,7 +371,7 @@ export default function Home() {
             onClick={() => setActiveImageIndex(null)}
             className="absolute top-6 right-6 text-white text-xs tracking-widest uppercase p-2"
           >
-            ✕ Close
+            ✕ Fermer
           </button>
           <div className="relative w-full h-[85vh]">
             <Image
