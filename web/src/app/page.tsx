@@ -1,24 +1,50 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 
-// Projets avec conservation intégrale des textes originaux
+// Découpage des textes complets originaux pour Lien Sacré
 const lienSacreProject = {
   id: 'lien-sacre',
   title: 'Lien sacré',
-  text1: `Une immersion au cœur des mariages en Algérie, mettant en lumière le rôle central`,
-  text2: `et la transmission des traditions par les femmes.`,
+  text1: `Je vous invite à plonger dans une autre dimension, celle de nos mariages en Algérie, où chaque instant est une véritable symphonie d'émotions, de traditions et de couleurs. Ici, la présence des femmes s’impose naturellement, du début à la fin des festivités.
+
+Dès les premiers préparatifs, ce sont elles qui dirigent. Mères, tantes, sœurs et amies se réunissent pour veiller à chaque détail avec une minutie sans faille. Qu’il s’agisse du choix des tenues, des bijoux ou des plats à servir, tout passe entre leurs mains habiles. Leur savoir-faire et leur engagement transforment cette période en un moment de solidarité intense. Derrière chaque geste se cache la détermination de rendre ce mariage exceptionnel.
+
+La mariée est au cœur de toutes les attentions, entourée de celles qui lui prodiguent conseils et soutien dans cette étape importante de sa vie. Quand elle quitte la maison familiale, l'émotion est palpable, marquée par des larmes et des sourires mêlés. Ce moment, empreint de traditions, est aussi une démonstration de l'unité et de l’affection qui lient les femmes autour de cet événement. Ce passage n’est pas seulement un adieu, c’est une étape de transmission où elles l’accompagnent vers un nouveau chapitre.`,
+
+  text2: `Tout au long des festivités, l’enthousiasme des femmes anime la célébration. Elles chantent, dansent, et célèbrent l’union avec une joie et une vitalité qui insufflent une énergie unique. Leur présence, bien plus qu’un simple ornement, est l’essence de ces rassemblements. Elles incarnent la continuité des traditions tout en apportant un vent de modernité et d’innovation. Les mariages algériens sont ainsi le reflet de cet équilibre délicat entre respect des coutumes et adaptation à une époque nouvelle.
+
+Même face aux défis et tensions qui peuvent surgir durant les préparatifs, ce sont souvent elles qui trouvent les mots pour apaiser les esprits et faire de chaque obstacle une opportunité de renforcer les liens. Leur rôle ne se limite pas à la coordination ; elles apportent une sagesse et une sérénité indispensables.
+
+Le mariage algérien, dans son essence, repose en grande partie sur leur engagement et leur soutien. Elles sont les gardiennes des traditions, les architectes de cette célébration, assurant que l’union des deux êtres soit magnifiée à chaque étape. Peu importe le nombre d’invités ou les imprévus, leur contribution fait de chaque mariage un moment unique et inoubliable.
+
+Je vous invite donc à découvrir l’univers de nos mariages algériens, où l’amour et la complicité féminine se tissent pour créer des souvenirs précieux. Venez vivre ces instants de bonheur où se mêlent tradition, émotion et modernité, portés par la grâce et l’engagement des femmes.`,
+
   images: Array.from({ length: 21 }, (_, i) => `/liensacre/${i + 1}.jpg`),
 }
 
+// Découpage des textes complets originaux pour Marhoumoun
 const marhoumounProject = {
   id: 'marhoumoun',
   title: 'مرحومون / Marhoumoun',
-  text1: `La mort n’a pas de sens. Dans ce projet, je retrace les trois jours qui suivent un décès en Oranie.`,
-  text2: `Les membres de la famille mettent leur chagrin de côté pour accueillir, nourrir, prendre soin des invités.`,
-  text3: `Ce rituel collectif d'hospitalité et de mémoire soutient la communauté à travers l'épreuve de la perte.`,
-  vimeoUrl: 'https://player.vimeo.com/video/1223166918?badge=0&autopause=0&player_id=0&app_id=58479&title=0&byline=0&portrait=0', 
+  text1: `La mort n’a pas de sens.
+
+Quand le téléphone sonne et qu'on entend « Allah akbar » ou un hurlement, une larme silencieuse qui tombe et un « Inna lillah wa inna ilayhi raji'oun », cet appel n'est que le premier pour annoncer un décès. Il faut ensuite l’annoncer au reste de la maison en restant courageux et fort, puisque ce n’est pas le moment de craquer.
+
+Je me rappelle du décès de mon grand-père. Je n'étais qu'une petite fille, je ne sais pas qui avait appelé. Je suis descendue par les escaliers, j'ai ouvert la porte et là, je vois notre voisine qui m’a retenue et qui disait ne pas s'attendre à ce qu'une gamine puisse avoir autant de force. C’était le premier décès d’un proche que j’ai vécu.`,
+
+  text2: `Avec le temps, on comprend que c’est juste une autre étape de la vie, qu'on va tous y passer un jour et être dans les deux camps : el motaazi et el moaazi. Et puis un jour, on sera el marhoum / el marhouma.
+
+La mort ne frappe jamais à la porte pour nous prévenir. Dans ce projet, je retrace les trois jours qui suivent un décès en Oranie. Les membres de la famille mettent leur chagrin de côté pour accueillir, nourrir, prendre soin des invités. À chaque enterrement, le même scénario se répète. Et à chaque fois, je me surprends à espérer qu’un jour, nous pourrons pleurer. Pleurer librement.`,
+
+  text3: `Ici, les vivants prennent le dessus, masquant la douleur derrière les gestes, les plats servis, les formules échangées. Le mort, lui, est en paix. Ce qui reste à porter, c’est la charge des vivants.
+
+Le son que vous entendez est composé d’enregistrements réalisés durant les funérailles.
+
+« On meurt tous plusieurs fois dans une vie. »`,
+
+  vimeoUrl: 'https://player.vimeo.com/video/1223166918?badge=0&autopause=0&player_id=0&app_id=58479&title=0&byline=0&portrait=0',
   audioUrl: '/marhoumoun/audio.mp3',
   images: Array.from({ length: 57 }, (_, i) => `/marhoumoun/${i + 1}.jpeg`),
 }
@@ -38,15 +64,45 @@ export default function Home() {
   const [carouselIndex, setCarouselIndex] = useState(0)
   const [activeImageIndex, setActiveImageIndex] = useState<number | null>(null)
 
+  // Gestion du Highlighting & Scroll
+  const [highlightTarget, setHighlightTarget] = useState<'images' | 'audio' | 'video' | null>(null)
+
+  const imagesRef = useRef<HTMLDivElement | null>(null)
+  const audioRef = useRef<HTMLDivElement | null>(null)
+  const videoRef = useRef<HTMLDivElement | null>(null)
+
   const toggleMenu = (menuName: string) => {
     setActiveMenu(activeMenu === menuName ? null : menuName)
   }
 
-  const handleSelectProject = (project: any) => {
+  const handleSelectProject = (project: any, category: string) => {
     setSelectedProject(project)
     setShowContact(false)
     setCarouselIndex(0)
     setActiveMenu(null)
+
+    // Déterminer la cible de mise en avant selon la catégorie cliquée
+    let target: 'images' | 'audio' | 'video' = 'images'
+    if (category === 'videography') target = 'video'
+    if (category === 'audiography') target = 'audio'
+
+    setHighlightTarget(target)
+
+    // Défiler vers le composant après le rendu
+    setTimeout(() => {
+      let targetRef = imagesRef
+      if (target === 'video') targetRef = videoRef
+      if (target === 'audio') targetRef = audioRef
+
+      if (targetRef.current) {
+        targetRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      }
+    }, 150)
+
+    // Retirer le highlight après 3.5 secondes
+    setTimeout(() => {
+      setHighlightTarget(null)
+    }, 3500)
   }
 
   const prevSlide = () => {
@@ -142,7 +198,7 @@ export default function Home() {
                     {projectsData[category]?.map((project) => (
                       <button
                         key={project.id}
-                        onClick={() => handleSelectProject(project)}
+                        onClick={() => handleSelectProject(project, category)}
                         className="block w-full text-[11px] text-left opacity-70 hover:opacity-100 py-1"
                       >
                         {project.title}
@@ -203,7 +259,7 @@ export default function Home() {
             </section>
           ) : selectedProject ? (
             <section className="space-y-8 animate-fadeIn">
-              {/* En-tête du Projet */}
+              {/* Titre */}
               <div className="flex justify-between items-baseline border-b border-zinc-500/20 pb-3">
                 <h1 className="text-xl font-extralight tracking-wide">{selectedProject.title}</h1>
                 <button
@@ -216,22 +272,27 @@ export default function Home() {
 
               {/* 1. TEXTE 1 */}
               {selectedProject.text1 && (
-                <p className="text-xs md:text-sm leading-relaxed font-extralight opacity-85 whitespace-pre-line">
+                <div className="text-xs md:text-sm leading-relaxed font-extralight opacity-85 whitespace-pre-line space-y-4">
                   {selectedProject.text1}
-                </p>
+                </div>
               )}
 
-              {/* 2. AUDIO (si présent) */}
+              {/* 2. AUDIO (si disponible) */}
               {selectedProject.audioUrl && (
                 <div
-                  className={`p-3 rounded-lg border space-y-1 my-4 ${
-                    darkMode ? 'border-zinc-800 bg-zinc-900/50' : 'border-zinc-300 bg-zinc-200/40'
+                  ref={audioRef}
+                  className={`p-4 rounded-lg border transition-all duration-700 space-y-2 my-6 ${
+                    highlightTarget === 'audio'
+                      ? 'ring-2 ring-amber-400 border-amber-400 scale-[1.02]'
+                      : darkMode
+                      ? 'border-zinc-800 bg-zinc-900/50'
+                      : 'border-zinc-300 bg-zinc-200/40'
                   }`}
                 >
-                  <p className="text-[10px] uppercase tracking-[0.2em] opacity-60">
+                  <p className="text-[10px] uppercase tracking-[0.2em] opacity-70">
                     🔊 Ambiance Sonore
                   </p>
-                  <audio controls preload="metadata" className="w-full h-8 opacity-80 hover:opacity-100">
+                  <audio controls preload="metadata" className="w-full h-8 opacity-90 hover:opacity-100">
                     <source src={selectedProject.audioUrl} type="audio/mpeg" />
                   </audio>
                 </div>
@@ -239,14 +300,19 @@ export default function Home() {
 
               {/* 3. TEXTE 2 */}
               {selectedProject.text2 && (
-                <p className="text-xs md:text-sm leading-relaxed font-extralight opacity-85 whitespace-pre-line">
+                <div className="text-xs md:text-sm leading-relaxed font-extralight opacity-85 whitespace-pre-line space-y-4">
                   {selectedProject.text2}
-                </p>
+                </div>
               )}
 
-              {/* 4. IMAGES / PHOTOS */}
+              {/* 4. CARROUSEL PHOTOS */}
               {selectedProject.images && selectedProject.images.length > 0 && (
-                <div className="space-y-3 my-6">
+                <div
+                  ref={imagesRef}
+                  className={`space-y-3 my-6 rounded-lg p-2 transition-all duration-700 ${
+                    highlightTarget === 'images' ? 'ring-2 ring-amber-400 scale-[1.01]' : ''
+                  }`}
+                >
                   <div className="relative group overflow-hidden rounded-sm bg-black/20 h-[320px] sm:h-[450px] w-full flex items-center justify-center">
                     <Image
                       src={selectedProject.images[carouselIndex]}
@@ -277,7 +343,7 @@ export default function Home() {
                     </span>
                   </div>
 
-                  {/* Miniatures */}
+                  {/* Thumbnails */}
                   <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-thin">
                     {selectedProject.images.map((img: string, idx: number) => (
                       <button
@@ -303,16 +369,23 @@ export default function Home() {
                 </div>
               )}
 
-              {/* 5. TEXTE 3 (si présent) */}
+              {/* 5. TEXTE 3 (si disponible) */}
               {selectedProject.text3 && (
-                <p className="text-xs md:text-sm leading-relaxed font-extralight opacity-85 whitespace-pre-line">
+                <div className="text-xs md:text-sm leading-relaxed font-extralight opacity-85 whitespace-pre-line space-y-4">
                   {selectedProject.text3}
-                </p>
+                </div>
               )}
 
-              {/* 6. VIDÉO (si présente) */}
+              {/* 6. VIDÉO VIMEO (si disponible) */}
               {selectedProject.vimeoUrl && (
-                <div className="w-full rounded-lg overflow-hidden border border-zinc-500/10 shadow-lg bg-black my-6">
+                <div
+                  ref={videoRef}
+                  className={`w-full rounded-lg overflow-hidden border shadow-lg bg-black my-6 transition-all duration-700 ${
+                    highlightTarget === 'video'
+                      ? 'ring-2 ring-amber-400 border-amber-400 scale-[1.02]'
+                      : 'border-zinc-500/10'
+                  }`}
+                >
                   <div style={{ padding: '56.25% 0 0 0', position: 'relative' }}>
                     <iframe
                       src={selectedProject.vimeoUrl}
@@ -345,7 +418,7 @@ export default function Home() {
         </main>
       </div>
 
-      {/* Lightbox Zoom */}
+      {/* Lightbox Zoom Image */}
       {activeImageIndex !== null && selectedProject?.images && (
         <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex items-center justify-center p-4">
           <button
