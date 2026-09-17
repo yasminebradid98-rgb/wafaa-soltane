@@ -1,40 +1,20 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 
 // Project Data
 const lienSacreProject = {
   id: 'lien-sacre',
   title: 'Lien sacré',
-  description: `Je vous invite à plonger dans une autre dimension, celle de nos mariages en Algérie, où chaque instant est une véritable symphonie d'émotions, de traditions et de couleurs. Ici, la présence des femmes s’impose naturellement, du début à la fin des festivités.
-Dès les premiers préparatifs, ce sont elles qui dirigent. Mères, tantes, sœurs et amies se réunissent pour veiller à chaque détail avec une minutie sans faille. Qu’il s’agisse du choix des tenues, des bijoux ou des plats à servir, tout passe entre leurs mains habiles. Leur savoir-faire et leur engagement transforment cette période en un moment de solidarité intense. Derrière chaque geste se cache la détermination de rendre ce mariage exceptionnel.
-La mariée est au cœur de toutes les attentions, entourée de celles qui lui prodiguent conseils et soutien dans cette étape importante de sa vie. Quand elle quitte la maison familiale, l'émotion est palpable, marquée par des larmes et des sourires mêlés. Ce moment, empreint de traditions, est aussi une démonstration de l'unité et de l’affection qui lient les femmes autour de cet événement. Ce passage n’est pas seulement un adieu, c’est une étape de transmission où elles l’accompagnent vers un nouveau chapitre.
-Tout au long des festivités, l’enthousiasme des femmes anime la célébration. Elles chantent, dansent, et célèbrent l’union avec une joie et une vitalité qui insufflent une énergie unique. Leur présence, bien plus qu’un simple ornement, est l’essence de ces rassemblements. Elles incarnent la continuité des traditions tout en apportant un vent de modernité et d’innovation. Les mariages algériens sont ainsi le reflet de cet équilibre délicat entre respect des coutumes et adaptation à une époque nouvelle.
-Même face aux défis et tensions qui peuvent surgir durant les préparatifs, ce sont souvent elles qui trouvent les mots pour apaiser les esprits et faire de chaque obstacle une opportunité de renforcer les liens. Leur rôle ne se limite pas à la coordination ; elles apportent une sagesse et une sérénité indispensables.
-Le mariage algérien, dans son essence, repose en grande partie sur leur engagement et leur soutien. Elles sont les gardiennes des traditions, les architectes de cette célébration, assurant que l’union des deux êtres soit magnifiée à chaque étape. Peu importe le nombre d’invités ou les imprévus, leur contribution fait de chaque mariage un moment unique et inoubliable.
-Je vous invite donc à découvrir l’univers de nos mariages algériens, où l’amour et la complicité féminine se tissent pour créer des souvenirs précieux. Venez vivre ces instants de bonheur où se mêlent tradition, émotion et modernité, portés par la grâce et l’engagement des femmes.
-
-
-`,
+  description: `Une immersion au cœur des mariages en Algérie, mettant en lumière le rôle central et la transmission des traditions par les femmes.`,
   images: Array.from({ length: 21 }, (_, i) => `/liensacre/${i + 1}.jpg`),
 }
 
 const marhoumounProject = {
   id: 'marhoumoun',
   title: 'مرحومون / Marhoumoun',
-  description: `
-La mort n’a pas de sens.
-
-Quand le téléphone sonne et qu'on entend « Allah akbar » ou un hurlement, une larme silencieuse qui tombe et un « Inna lillah wa inna ilayhi raji'oun », cet appel n'est que le premier pour annoncer un décès. Il faut ensuite l’annoncer au reste de la maison en restant courageux et fort, puisque ce n’est pas le moment de craquer.
-Je me rappelle du décès de mon grand-père. Je n'étais qu'une petite fille, je ne sais pas qui avait appelé. Je suis descendue par les escaliers, j'ai ouvert la porte et là, je vois notre voisine qui m’a retenue et qui disait ne pas s'attendre à ce qu'une gamine puisse avoir autant de force. C’était le premier décès d’un proche que j’ai vécu.
-Avec le temps, on comprend que c’est juste une autre étape de la vie, qu'on va tous y passer un jour et être dans les deux camps : el motaazi et el moaazi. Et puis un jour, on sera el marhoum / el marhouma.
-La mort ne frappe jamais à la porte pour nous prévenir. Dans ce projet, je retrace les trois jours qui suivent un décès en Oranie. Les membres de la famille mettent leur chagrin de côté pour accueillir, nourrir, prendre soin des invités. À chaque enterrement, le même scénario se répète. Et à chaque fois, je me surprends à espérer qu’un jour, nous pourrons pleurer. Pleurer librement.
-Ici, les vivants prennent le dessus, masquant la douleur derrière les gestes, les plats servis, les formules échangées. Le mort, lui, est en paix. Ce qui reste à porter, c’est la charge des vivants.
-Le son que vous entendez est composé d’enregistrements réalisés durant les funérailles.
-« On meurt tous plusieurs fois dans une vie. »
-
-`,
+  description: `La mort n’a pas de sens. Dans ce projet, je retrace les trois jours qui suivent un décès en Oranie. Les membres de la famille mettent leur chagrin de côté pour accueillir, nourrir, prendre soin des invités.`,
   vimeoUrl: 'https://player.vimeo.com/video/1223166918?badge=0&autopause=0&player_id=0&app_id=58479&title=0&byline=0&portrait=0', 
   audioUrl: '/marhoumoun/audio.mp3',
   images: Array.from({ length: 57 }, (_, i) => `/marhoumoun/${i + 1}.jpeg`),
@@ -80,18 +60,41 @@ export default function Home() {
     )
   }
 
+  // Navigation dans la Lightbox (Zoom)
+  const prevZoomImage = () => {
+    if (activeImageIndex === null || !selectedProject?.images) return
+    setActiveImageIndex((prev) =>
+      prev === 0 ? selectedProject.images.length - 1 : (prev as number) - 1
+    )
+  }
+
+  const nextZoomImage = () => {
+    if (activeImageIndex === null || !selectedProject?.images) return
+    setActiveImageIndex((prev) =>
+      prev === selectedProject.images.length - 1 ? 0 : (prev as number) + 1
+    )
+  }
+
+  // Support des flèches du clavier pour naviguer dans le zoom
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (activeImageIndex === null) return
+      if (e.key === 'ArrowLeft') prevZoomImage()
+      if (e.key === 'ArrowRight') nextZoomImage()
+      if (e.key === 'Escape') setActiveImageIndex(null)
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [activeImageIndex, selectedProject])
+
   return (
     <div
       className={`min-h-screen transition-colors duration-500 font-sans ${
         darkMode ? 'bg-zinc-950 text-zinc-100' : 'bg-[#e2e1dd] text-zinc-900'
       }`}
     >
-      {/* Container principal */}
       <div className="px-4 sm:px-8 md:px-16 py-6 max-w-4xl mx-auto">
-        
-        {/* Navigation & Switch Theme */}
         <header className="mb-10 relative z-30 space-y-6">
-          {/* Toggle Theme - Repositionné pour mobile */}
           <div className="flex justify-end">
             <button
               onClick={() => setDarkMode(!darkMode)}
@@ -163,7 +166,6 @@ export default function Home() {
         </header>
 
         <main className="max-w-2xl mx-auto space-y-8 relative z-10">
-          {/* VUE CONTACT */}
           {showContact ? (
             <section className="space-y-6 animate-fadeIn">
               <h1 className="text-xl font-extralight tracking-wide border-b border-zinc-500/20 pb-3">
@@ -171,9 +173,7 @@ export default function Home() {
               </h1>
 
               <div className="space-y-4 text-xs md:text-sm font-extralight opacity-80">
-                <p>
-                  Pour toute demande de collaboration, d'exposition ou d'information :
-                </p>
+                <p>Pour toute demande de collaboration, d'exposition ou d'information :</p>
 
                 <div className="space-y-2 pt-2">
                   <p>
@@ -198,63 +198,9 @@ export default function Home() {
                     </a>
                   </p>
                 </div>
-
-                <form
-                  action="https://formspree.io/f/VOTRE_ID_FORMSPREE"
-                  method="POST"
-                  className="space-y-4 pt-6"
-                >
-                  <div>
-                    <label className="block text-[10px] uppercase tracking-widest mb-1 opacity-60">Nom</label>
-                    <input
-                      type="text"
-                      name="name"
-                      required
-                      className={`w-full p-2.5 text-xs rounded border bg-transparent focus:outline-none transition ${
-                        darkMode ? 'border-zinc-800 focus:border-zinc-500' : 'border-zinc-300 focus:border-zinc-600'
-                      }`}
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-[10px] uppercase tracking-widest mb-1 opacity-60">Email</label>
-                    <input
-                      type="email"
-                      name="email"
-                      required
-                      className={`w-full p-2.5 text-xs rounded border bg-transparent focus:outline-none transition ${
-                        darkMode ? 'border-zinc-800 focus:border-zinc-500' : 'border-zinc-300 focus:border-zinc-600'
-                      }`}
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-[10px] uppercase tracking-widest mb-1 opacity-60">Message</label>
-                    <textarea
-                      name="message"
-                      rows={4}
-                      required
-                      className={`w-full p-2.5 text-xs rounded border bg-transparent focus:outline-none transition ${
-                        darkMode ? 'border-zinc-800 focus:border-zinc-500' : 'border-zinc-300 focus:border-zinc-600'
-                      }`}
-                    ></textarea>
-                  </div>
-
-                  <button
-                    type="submit"
-                    className={`text-[10px] tracking-[0.2em] uppercase px-6 py-2.5 rounded border transition-all ${
-                      darkMode
-                        ? 'border-zinc-700 hover:bg-zinc-100 hover:text-zinc-900'
-                        : 'border-zinc-400 hover:bg-zinc-900 hover:text-zinc-100'
-                    }`}
-                  >
-                    Envoyer
-                  </button>
-                </form>
               </div>
             </section>
           ) : selectedProject ? (
-            /* VUE PROJET */
             <section className="space-y-6 animate-fadeIn">
               <div className="flex justify-between items-baseline border-b border-zinc-500/20 pb-3">
                 <h1 className="text-xl font-extralight tracking-wide">{selectedProject.title}</h1>
@@ -310,7 +256,7 @@ export default function Home() {
                 </div>
               )}
 
-              {/* Carousel Optimsé */}
+              {/* Carousel */}
               {selectedProject.images && selectedProject.images.length > 0 && (
                 <div className="space-y-3 pt-2">
                   <div className="relative group overflow-hidden rounded-sm bg-black/20 h-[320px] sm:h-[450px] w-full flex items-center justify-center">
@@ -343,7 +289,7 @@ export default function Home() {
                     </span>
                   </div>
 
-                  {/* Navigation Miniatures */}
+                  {/* Miniatures */}
                   <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-thin">
                     {selectedProject.images.map((img: string, idx: number) => (
                       <button
@@ -370,15 +316,11 @@ export default function Home() {
               )}
             </section>
           ) : (
-            /* VUE BIOGRAPHIE */
             <section className="space-y-6">
               <h1 className="text-2xl font-extralight">Biographie</h1>
               <div className="text-xs md:text-sm leading-relaxed opacity-80 font-extralight space-y-4">
                 <p>
                   <strong className="font-normal">WAFAA SOLTANE</strong>, née en 1994 à Oran, a étudié la littérature française à l'Université d'Oran avant de se tourner vers la photographie documentaire.
-                </p>
-                <p>
-                  Son parcours artistique s'enrichit d'une formation auprès de la photographe Liasmine Fodil, suivie d'un mentorat approfondi avec Lola Khalfa dans le cadre de la première édition du projet Tilawin (2021-2022).
                 </p>
               </div>
             </section>
@@ -386,16 +328,28 @@ export default function Home() {
         </main>
       </div>
 
-      {/* Lightbox Zoom */}
+      {/* LIGHTBOX ZOOM AMÉLIORÉE (Avec navigation Précédent / Suivant) */}
       {activeImageIndex !== null && selectedProject?.images && (
         <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex items-center justify-center p-4">
+          
+          {/* Bouton Fermer */}
           <button
             onClick={() => setActiveImageIndex(null)}
-            className="absolute top-6 right-6 text-white text-xs tracking-widest uppercase p-2"
+            className="absolute top-6 right-6 text-white/80 hover:text-white text-xs tracking-widest uppercase p-2 z-50"
           >
             ✕ Fermer
           </button>
-          <div className="relative w-full h-[85vh]">
+
+          {/* Bouton Précédent Zoom */}
+          <button
+            onClick={prevZoomImage}
+            className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/90 text-white w-10 h-10 rounded-full text-lg flex items-center justify-center transition z-50"
+          >
+            ‹
+          </button>
+
+          {/* Conteneur Image */}
+          <div className="relative w-full h-[80vh]">
             <Image
               src={selectedProject.images[activeImageIndex]}
               alt="Zoom"
@@ -404,6 +358,19 @@ export default function Home() {
               className="object-contain"
             />
           </div>
+
+          {/* Bouton Suivant Zoom */}
+          <button
+            onClick={nextZoomImage}
+            className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/90 text-white w-10 h-10 rounded-full text-lg flex items-center justify-center transition z-50"
+          >
+            ›
+          </button>
+
+          {/* Compteur d'images en zoom */}
+          <span className="absolute bottom-6 text-[11px] tracking-widest text-white/70 bg-black/60 px-3 py-1 rounded backdrop-blur-sm">
+            {activeImageIndex + 1} / {selectedProject.images.length}
+          </span>
         </div>
       )}
     </div>
