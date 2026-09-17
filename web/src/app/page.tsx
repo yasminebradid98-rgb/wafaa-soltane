@@ -3,18 +3,20 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 
-// Project Data
+// Data Projet avec textes scindés pour un rendu narratif dynamique
 const lienSacreProject = {
   id: 'lien-sacre',
   title: 'Lien sacré',
-  description: `Une immersion au cœur des mariages en Algérie, mettant en lumière le rôle central et la transmission des traditions par les femmes.`,
+  descriptionPart1: `Une immersion au cœur des mariages en Algérie, mettant en lumière le rôle central...`,
+  descriptionPart2: `...et la transmission des traditions par les femmes.`,
   images: Array.from({ length: 21 }, (_, i) => `/liensacre/${i + 1}.jpg`),
 }
 
 const marhoumounProject = {
   id: 'marhoumoun',
   title: 'مرحومون / Marhoumoun',
-  description: `La mort n’a pas de sens. Dans ce projet, je retrace les trois jours qui suivent un décès en Oranie. Les membres de la famille mettent leur chagrin de côté pour accueillir, nourrir, prendre soin des invités.`,
+  descriptionPart1: `La mort n’a pas de sens. Dans ce projet, je retrace les trois jours qui suivent un décès en Oranie.`,
+  descriptionPart2: `Les membres de la famille mettent leur chagrin de côté pour accueillir, nourrir, prendre soin des invités.`,
   vimeoUrl: 'https://player.vimeo.com/video/1223166918?badge=0&autopause=0&player_id=0&app_id=58479&title=0&byline=0&portrait=0', 
   audioUrl: '/marhoumoun/audio.mp3',
   images: Array.from({ length: 57 }, (_, i) => `/marhoumoun/${i + 1}.jpeg`),
@@ -60,7 +62,6 @@ export default function Home() {
     )
   }
 
-  // Navigation dans la Lightbox (Zoom)
   const prevZoomImage = () => {
     if (activeImageIndex === null || !selectedProject?.images) return
     setActiveImageIndex((prev) =>
@@ -75,7 +76,6 @@ export default function Home() {
     )
   }
 
-  // Support des flèches du clavier pour naviguer dans le zoom
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (activeImageIndex === null) return
@@ -201,7 +201,8 @@ export default function Home() {
               </div>
             </section>
           ) : selectedProject ? (
-            <section className="space-y-6 animate-fadeIn">
+            <section className="space-y-8 animate-fadeIn">
+              {/* Entête Titre */}
               <div className="flex justify-between items-baseline border-b border-zinc-500/20 pb-3">
                 <h1 className="text-xl font-extralight tracking-wide">{selectedProject.title}</h1>
                 <button
@@ -212,53 +213,16 @@ export default function Home() {
                 </button>
               </div>
 
-              {selectedProject.description && (
+              {/* 1. Première partie du texte */}
+              {selectedProject.descriptionPart1 && (
                 <p className="text-xs md:text-sm leading-relaxed font-extralight opacity-85 whitespace-pre-line">
-                  {selectedProject.description}
+                  {selectedProject.descriptionPart1}
                 </p>
               )}
 
-              {/* Player Audio */}
-              {selectedProject.audioUrl && (
-                <div
-                  className={`p-3 rounded-lg border space-y-1 ${
-                    darkMode ? 'border-zinc-800 bg-zinc-900/50' : 'border-zinc-300 bg-zinc-200/40'
-                  }`}
-                >
-                  <p className="text-[10px] uppercase tracking-[0.2em] opacity-60">
-                    🔊 Ambiance Sonore
-                  </p>
-                  <audio controls preload="metadata" className="w-full h-8 opacity-80 hover:opacity-100">
-                    <source src={selectedProject.audioUrl} type="audio/mpeg" />
-                  </audio>
-                </div>
-              )}
-
-              {/* Player Vidéo Vimeo */}
-              {selectedProject.vimeoUrl && (
-                <div className="w-full rounded-lg overflow-hidden border border-zinc-500/10 shadow-lg bg-black">
-                  <div style={{ padding: '56.25% 0 0 0', position: 'relative' }}>
-                    <iframe
-                      src={selectedProject.vimeoUrl}
-                      frameBorder="0"
-                      allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                      referrerPolicy="strict-origin-when-cross-origin"
-                      style={{
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        width: '100%',
-                        height: '100%',
-                      }}
-                      title={selectedProject.title}
-                    />
-                  </div>
-                </div>
-              )}
-
-              {/* Carousel */}
+              {/* 2. Carrousel de Photos */}
               {selectedProject.images && selectedProject.images.length > 0 && (
-                <div className="space-y-3 pt-2">
+                <div className="space-y-3 my-4">
                   <div className="relative group overflow-hidden rounded-sm bg-black/20 h-[320px] sm:h-[450px] w-full flex items-center justify-center">
                     <Image
                       src={selectedProject.images[carouselIndex]}
@@ -314,6 +278,50 @@ export default function Home() {
                   </div>
                 </div>
               )}
+
+              {/* 3. Player Vidéo / Audio */}
+              {selectedProject.vimeoUrl && (
+                <div className="w-full rounded-lg overflow-hidden border border-zinc-500/10 shadow-lg bg-black my-4">
+                  <div style={{ padding: '56.25% 0 0 0', position: 'relative' }}>
+                    <iframe
+                      src={selectedProject.vimeoUrl}
+                      frameBorder="0"
+                      allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                      }}
+                      title={selectedProject.title}
+                    />
+                  </div>
+                </div>
+              )}
+
+              {selectedProject.audioUrl && (
+                <div
+                  className={`p-3 rounded-lg border space-y-1 my-4 ${
+                    darkMode ? 'border-zinc-800 bg-zinc-900/50' : 'border-zinc-300 bg-zinc-200/40'
+                  }`}
+                >
+                  <p className="text-[10px] uppercase tracking-[0.2em] opacity-60">
+                    🔊 Ambiance Sonore
+                  </p>
+                  <audio controls preload="metadata" className="w-full h-8 opacity-80 hover:opacity-100">
+                    <source src={selectedProject.audioUrl} type="audio/mpeg" />
+                  </audio>
+                </div>
+              )}
+
+              {/* 4. Deuxième partie du texte */}
+              {selectedProject.descriptionPart2 && (
+                <p className="text-xs md:text-sm leading-relaxed font-extralight opacity-85 whitespace-pre-line pt-2">
+                  {selectedProject.descriptionPart2}
+                </p>
+              )}
             </section>
           ) : (
             <section className="space-y-6">
@@ -328,11 +336,9 @@ export default function Home() {
         </main>
       </div>
 
-      {/* LIGHTBOX ZOOM AMÉLIORÉE (Avec navigation Précédent / Suivant) */}
+      {/* Lightbox Zoom */}
       {activeImageIndex !== null && selectedProject?.images && (
         <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex items-center justify-center p-4">
-          
-          {/* Bouton Fermer */}
           <button
             onClick={() => setActiveImageIndex(null)}
             className="absolute top-6 right-6 text-white/80 hover:text-white text-xs tracking-widest uppercase p-2 z-50"
@@ -340,7 +346,6 @@ export default function Home() {
             ✕ Fermer
           </button>
 
-          {/* Bouton Précédent Zoom */}
           <button
             onClick={prevZoomImage}
             className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/90 text-white w-10 h-10 rounded-full text-lg flex items-center justify-center transition z-50"
@@ -348,7 +353,6 @@ export default function Home() {
             ‹
           </button>
 
-          {/* Conteneur Image */}
           <div className="relative w-full h-[80vh]">
             <Image
               src={selectedProject.images[activeImageIndex]}
@@ -359,7 +363,6 @@ export default function Home() {
             />
           </div>
 
-          {/* Bouton Suivant Zoom */}
           <button
             onClick={nextZoomImage}
             className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/90 text-white w-10 h-10 rounded-full text-lg flex items-center justify-center transition z-50"
@@ -367,7 +370,6 @@ export default function Home() {
             ›
           </button>
 
-          {/* Compteur d'images en zoom */}
           <span className="absolute bottom-6 text-[11px] tracking-widest text-white/70 bg-black/60 px-3 py-1 rounded backdrop-blur-sm">
             {activeImageIndex + 1} / {selectedProject.images.length}
           </span>
